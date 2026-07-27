@@ -31,7 +31,7 @@ function warnIfDemoMode() {
   document.body.prepend(banner);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function initApp() {
   warnIfDemoMode();
   const reveal = resolveReveal();
   const tabsEl = document.querySelector(".tabs");
@@ -64,4 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   liveStatus.tick();
   setInterval(liveStatus.tick, 15000);
-});
+}
+
+// loader.js injeta este script depois que o DOM já está pronto
+// (document.head.appendChild acontece após o parse do body), então
+// não há DOMContentLoaded pra esperar — roda direto.
+initApp();

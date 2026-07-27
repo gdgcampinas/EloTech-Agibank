@@ -51,7 +51,13 @@
   EloTech — realizado pelo <a href="https://gdgcampinas.dev" target="_blank" rel="noopener">GDG Campinas</a>, com a agibank como anfitriã.
 </footer>
 
-<script src="schedule.js?v=4"></script>
+<!--
+  DEV/PROD: tenta schedule.dev.js (dados reais, só local, gitignored);
+  se não existir (produção), cai pra schedule.js (mock). Padrão clássico
+  de fallback com onerror — funciona em qualquer navegador, sem depender
+  de carregamento dinâmico assíncrono.
+-->
+<script src="schedule.dev.js" onerror="this.onerror=null;document.write('\x3Cscript src=&quot;schedule.js?v=4&quot;\x3E\x3C/script\x3E')"></script>
 <script src="track-card.js?v=4"></script>
 <script src="agenda.js?v=4"></script>
 <script src="live-status.js?v=4"></script>
