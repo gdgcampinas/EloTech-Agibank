@@ -1,26 +1,36 @@
 /**
- * Único template pra "card de trilha" — usado tanto na agenda completa
- * quanto no card "ao vivo agora". Muda só o variant, nunca duplica markup.
- *
- * `reveal: false` esconde palestrante/título (linha do tempo continua visível).
- * Usado pra publicar a agenda sem entregar o line-up ainda.
+ * Único template de "card de trilha" — usado na agenda completa e no
+ * painel "acontecendo agora". Tudo por parâmetro, nada duplicado:
+ *   reveal    → false esconde palestrante/título (mock "Em breve")
+ *   live      → adiciona a tag "AGORA" pulsante
+ *   timeRange → texto "HH:MM — HH:MM" pro rodapé do card (opcional)
  */
-const CARD_VARIANTS = {
-  agenda: { card: "talk", label: "track-label", speaker: "speaker", title: "title" },
-  live: { card: "live-track", label: "tname", speaker: "tspeaker", title: "ttitle" },
-};
-
 const HIDDEN_SPEAKER_LABEL = "Em breve";
 
-function trackCardMarkup(track, data, variant = "agenda", { reveal = true } = {}) {
-  const cls = CARD_VARIANTS[variant];
-  const accent = variant === "live" ? ` style="border-left-color:var(--${track.id})"` : "";
+function trackCardMarkup(track, data, { reveal = true, live = false, timeRange = "" } = {}) {
   const speaker = reveal ? data.speaker : HIDDEN_SPEAKER_LABEL;
   const title = reveal ? data.title : "";
+  const room = reveal ? track.room : "";
+
+  const nowTag = live
+    ? `<span class="now-tag"><span class="dot"></span>AGORA</span>`
+    : "";
+
+  const footItems = [timeRange, room].filter(Boolean);
+  const foot = footItems.length
+    ? `<div class="foot">${footItems.map((item, i) => i === footItems.length - 1 && room
+        ? `<span class="room-tag">${item}</span>`
+        : `<span>${item}</span>`).join("")}</div>`
+    : "";
+
   return `
-    <div class="${cls.card}" data-track="${track.id}"${accent}>
-      <div class="${cls.label}">${track.label}</div>
-      <div class="${cls.speaker}">${speaker}</div>
-      ${title ? `<div class="${cls.title}">${title}</div>` : ""}
+    <div class="talk" data-track="${track.id}">
+      <div class="track-row">
+        <span class="track-label"><span class="dot" style="background:var(--${track.id})"></span>${track.label}</span>
+        ${nowTag}
+      </div>
+      ${title ? `<div class="title">${title}</div>` : ""}
+      <div class="speaker">${speaker}</div>
+      ${foot}
     </div>`;
 }

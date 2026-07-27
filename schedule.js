@@ -12,13 +12,16 @@ const EVENT = {
   timezone: "America/Sao_Paulo",
   utcOffset: "-03:00",
   venue: "Agi Campus, Campinas/SP",
+  address: "Rua Sergio Fernandes Borges Soares, 1000, Campinas, SP",
   lineupRevealed: true, // dados abaixo já são mock, não precisa esconder
 };
 
+// room/mc em branco = card não mostra a linha (ver track-card.js).
+// Preencher quando a organização definir salas e mestres de cerimônia.
 const TRACKS = [
-  { id: "ia", label: "IA", shortLabel: "IA" },
-  { id: "webdata", label: "Front-end / Back-end / Data", shortLabel: "Front/Back/Data" },
-  { id: "mentoring", label: "Mentoring & Growth", shortLabel: "Mentoring & Growth" },
+  { id: "ia", label: "IA", shortLabel: "IA", room: "", mc: "" },
+  { id: "webdata", label: "Front-end / Back-end / Data", shortLabel: "Front/Back/Data", room: "", mc: "" },
+  { id: "mentoring", label: "Mentoring & Growth", shortLabel: "Mentoring & Growth", room: "", mc: "" },
 ];
 
 function eventTime(hhmm) {

@@ -1,105 +1,163 @@
 /**
- * Feature: "ao vivo agora" — contagem regressiva, palestras em andamento,
- * intervalo e encerramento. Roda sozinha via setInterval, recalculando
- * a cada tick a partir da hora real. Nada aqui é específico do EloTech:
- * recebe schedule/tracks/event por parâmetro.
+ * Feature: estado ao vivo do evento — pill do header, hero (3 estados),
+ * destaque na agenda (ativo/passado) e barra fixa ao rolar.
+ *
+ * Separado em duas camadas, sem duplicar lógica de data/hora:
+ *   resolveEventState() → só calcula o estado a partir de now/schedule
+ *   createLiveStatus()  → só renderiza, consumindo o estado já resolvido
  */
 function pad(n) {
   return String(n).padStart(2, "0");
 }
 
-function createLiveStatus({ schedule, tracks, event, elements, now = () => new Date(), reveal = true }) {
-  const { statusCard, statusTitle, statusMain, statusSub, liveTracks, stickyTxt, stickyPulse } = elements;
-
-  function setLive(isLive) {
-    statusCard.classList.toggle("live", isLive);
-    stickyPulse.style.display = isLive ? "inline-block" : "none";
-    statusTitle.innerHTML = isLive ? '<span class="pulse"></span>Ao vivo agora' : "Status";
-  }
-
-  function clearActiveSlot() {
-    document.querySelectorAll(".slot.active").forEach(el => el.classList.remove("active"));
-  }
-
-  function renderCountdown(now, first) {
-    const diff = first - now;
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const mins = Math.floor((diff % 3600000) / 60000);
-    setLive(false);
-    statusTitle.textContent = "Contagem regressiva";
-    statusMain.textContent = days > 0
-      ? `Faltam ${days} dia${days !== 1 ? "s" : ""} para o ${event.name}`
-      : `Começa em ${pad(hours)}h${pad(mins)}min`;
-    statusSub.textContent = `${formatDate(first, event.timezone)} · ${event.venue}`;
-    liveTracks.innerHTML = "";
-    stickyTxt.textContent = statusMain.textContent;
-  }
-
-  function renderEnded() {
-    setLive(false);
-    statusTitle.textContent = "Encerrado";
-    statusMain.textContent = `Valeu por participar do ${event.name}! 💙`;
-    statusSub.textContent = "Até a próxima edição.";
-    liveTracks.innerHTML = "";
-    stickyTxt.textContent = statusMain.textContent;
-  }
-
-  function renderActiveSlot(slot, index) {
-    document.querySelector(`.slot[data-index="${index}"]`)?.classList.add("active");
-    const range = `${formatEventTime(slot.start, event.timezone)} — ${formatEventTime(slot.end, event.timezone)}`;
-
-    if (slot.banner) {
-      statusMain.textContent = slot.banner;
-      statusSub.textContent = range;
-      liveTracks.innerHTML = "";
-      stickyTxt.textContent = slot.banner;
-      return;
-    }
-
-    statusMain.textContent = "Palestras em andamento";
-    statusSub.textContent = range;
-    liveTracks.innerHTML = tracks.map(track => trackCardMarkup(track, slot.talks[track.id], "live", { reveal })).join("");
-    stickyTxt.textContent = reveal
-      ? `Agora: ${tracks.map(track => slot.talks[track.id].speaker).join(" · ")}`
-      : "Agora: confira sua trilha";
-  }
-
-  function renderBetweenSlots(now) {
-    const next = schedule.find(s => now < s.start);
-    statusMain.textContent = "Intervalo entre palestras";
-    statusSub.textContent = next ? `Próximo bloco às ${formatEventTime(next.start, event.timezone)}` : "";
-    liveTracks.innerHTML = "";
-    stickyTxt.textContent = next ? `Intervalo — próximo bloco às ${formatEventTime(next.start, event.timezone)}` : "Intervalo";
-  }
-
-  function tick() {
-    const currentTime = now();
-    clearActiveSlot();
-
-    const first = schedule[0].start;
-    const last = schedule[schedule.length - 1].end;
-
-    if (currentTime < first) return renderCountdown(currentTime, first);
-    if (currentTime > last) return renderEnded();
-
-    setLive(true);
-    const activeIndex = schedule.findIndex(s => currentTime >= s.start && currentTime < s.end);
-    if (activeIndex >= 0) renderActiveSlot(schedule[activeIndex], activeIndex);
-    else renderBetweenSlots(currentTime);
-  }
-
-  return { tick };
+function countdownParts(ms) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  return {
+    days: Math.floor(total / 86400),
+    hours: Math.floor((total % 86400) / 3600),
+    mins: Math.floor((total % 3600) / 60),
+    secs: total % 60,
+  };
 }
 
-function formatDate(date, timezone) {
-  return date.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: timezone })
-    + " · " + formatEventTime(date, timezone);
+function formatHMS(ms) {
+  const { hours, mins, secs } = countdownParts(ms);
+  return `${pad(hours)}:${pad(mins)}:${pad(secs)}`;
 }
 
-function initStickyStatus(statusSectionEl, stickyEl) {
+function formatMS(ms) {
+  const { mins, secs } = countdownParts(ms);
+  return `${pad(mins)}:${pad(secs)}`;
+}
+
+function formatDaysHMS(ms) {
+  const { days, hours, mins, secs } = countdownParts(ms);
+  return days > 0 ? `${days}d ${pad(hours)}:${pad(mins)}:${pad(secs)}` : `${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+}
+
+function initStickyStatus(sectionEl, stickyEl) {
   new IntersectionObserver(
     ([entry]) => stickyEl.classList.toggle("show", !entry.isIntersecting),
     { threshold: 0 }
-  ).observe(statusSectionEl);
+  ).observe(sectionEl);
+}
+
+/** Só calcula o estado — nenhum acesso ao DOM aqui. */
+function resolveEventState(now, schedule) {
+  const first = schedule[0].start;
+  const last = schedule[schedule.length - 1].end;
+
+  if (now < first) return { phase: "before", first };
+  if (now > last) return { phase: "after" };
+
+  const activeIndex = schedule.findIndex(s => now >= s.start && now < s.end);
+  if (activeIndex >= 0) {
+    return { phase: "live", activeIndex, activeSlot: schedule[activeIndex] };
+  }
+  const nextIndex = schedule.findIndex(s => now < s.start);
+  return { phase: "live", activeIndex: -1, nextSlot: nextIndex >= 0 ? schedule[nextIndex] : null };
+}
+
+function createLiveStatus({ schedule, tracks, event, elements, now = () => new Date(), reveal = true }) {
+  const { statusPill, hero, stickyTxt, stickyPulse } = elements;
+
+  function renderStatusPill(state) {
+    statusPill.classList.toggle("live", state.phase === "live");
+    if (state.phase === "before") {
+      statusPill.innerHTML = `<span class="dot"></span>Começa em ${formatDaysHMS(state.first - now())}`;
+    } else if (state.phase === "live") {
+      statusPill.innerHTML = `<span class="dot"></span>AO VIVO`;
+    } else {
+      statusPill.innerHTML = `<span class="dot"></span>Encerrado`;
+    }
+  }
+
+  function renderHeroBefore(state) {
+    hero.innerHTML = `
+      <div class="hero-card hero-before">
+        <div class="hero-label">O EVENTO COMEÇA EM</div>
+        <div class="countdown">${formatDaysHMS(state.first - now())}</div>
+        <div class="hero-before-row">
+          <span class="pill-amber">Inscrições abertas</span>
+          <span class="hero-hint">Programação abaixo em modo prévia</span>
+        </div>
+      </div>`;
+    stickyPulse.style.display = "none";
+    stickyTxt.textContent = `Começa em ${formatDaysHMS(state.first - now())}`;
+  }
+
+  function renderHeroAfter() {
+    hero.innerHTML = `
+      <div class="hero-card hero-after">
+        <div class="title">Obrigado por participar! 🎉</div>
+        <div class="sub">O ${event.name} ${new Date().getFullYear()} foi encerrado. Fotos e conteúdos em breve pelo GDG Campinas.</div>
+      </div>`;
+    stickyPulse.style.display = "none";
+    stickyTxt.textContent = "Encerrado";
+  }
+
+  function renderHeroLive(state) {
+    const slot = state.activeSlot;
+
+    if (!slot) {
+      const next = state.nextSlot;
+      hero.innerHTML = `
+        <div class="hero-card live">
+          <div class="hero-label"><span class="dot"></span>ACONTECENDO AGORA</div>
+          <div class="hero-hint">Intervalo entre sessões${next ? ` — próximo bloco às ${formatEventTime(next.start, event.timezone)}` : ""}</div>
+        </div>`;
+      stickyTxt.textContent = next ? `Intervalo — próximo bloco às ${formatEventTime(next.start, event.timezone)}` : "Intervalo";
+      stickyPulse.style.display = "inline-block";
+      return;
+    }
+
+    const nextChange = `<span class="next-change">próxima troca em ${formatMS(slot.end - now())}</span>`;
+
+    if (slot.banner) {
+      hero.innerHTML = `
+        <div class="hero-card live">
+          <div class="hero-live-top">
+            <div class="hero-label"><span class="dot"></span>ACONTECENDO AGORA</div>
+            ${nextChange}
+          </div>
+          <div class="banner"><div class="t">${slot.banner}</div>${slot.room ? `<div class="r">${slot.room}</div>` : ""}</div>
+        </div>`;
+      stickyTxt.textContent = slot.banner;
+    } else {
+      const cards = tracks.map(track => trackCardMarkup(track, slot.talks[track.id], { reveal, live: true })).join("");
+      hero.innerHTML = `
+        <div class="hero-card live">
+          <div class="hero-live-top">
+            <div class="hero-label"><span class="dot"></span>ACONTECENDO AGORA</div>
+            ${nextChange}
+          </div>
+          <div class="talks" data-view="all">${cards}</div>
+        </div>`;
+      stickyTxt.textContent = reveal
+        ? `Agora: ${tracks.map(track => slot.talks[track.id].speaker).join(" · ")}`
+        : "Agora: confira sua trilha";
+    }
+    stickyPulse.style.display = "inline-block";
+  }
+
+  function markAgendaSlots(state) {
+    const currentTime = now();
+    document.querySelectorAll(".slot").forEach((el, index) => {
+      const slot = schedule[index];
+      el.classList.toggle("active", state.phase === "live" && index === state.activeIndex);
+      el.classList.toggle("past", slot.end <= currentTime);
+    });
+  }
+
+  function tick() {
+    const state = resolveEventState(now(), schedule);
+    renderStatusPill(state);
+    markAgendaSlots(state);
+
+    if (state.phase === "before") renderHeroBefore(state);
+    else if (state.phase === "after") renderHeroAfter();
+    else renderHeroLive(state);
+  }
+
+  return { tick };
 }

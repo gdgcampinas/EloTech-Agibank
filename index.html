@@ -12,43 +12,44 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="icon" href="favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
 
 <div id="stickyStatus"><div class="row"><span class="pulse" id="stickyPulse"></span><span class="txt" id="stickyTxt"></span></div></div>
 
 <header>
-  <h1 class="logo"><span>E</span><span>l</span><span>o</span><span>T</span><span>e</span><span>c</span><span>h</span></h1>
-  <div class="presented">
-    <img src="gdg-icon.png" alt="GDG Campinas" class="brand-icon">
-    <span>GDG Campinas</span>
-    <span class="plus">+</span>
-    <img src="agibank-icon.png" alt="agibank" class="brand-agibank">
+  <div class="header-top">
+    <div class="brand">
+      <img src="badge.jpg" alt="GDG Campinas + agibank">
+      <span>GDG Campinas + agibank</span>
+    </div>
+    <span class="status-pill" id="statusPill">Carregando…</span>
   </div>
-  <div class="meta">
-    <span>📅 01 de agosto de 2026</span>
-    <span>🕗 08:00 — 13:00</span>
-    <span>📍 Agi Campus, Campinas/SP</span>
-  </div>
-  <div class="tracks-legend"></div>
+  <img class="wordmark" src="wordmark.png" alt="EloTech">
+  <div class="meta-line" id="headerMeta"></div>
 </header>
 
-<section id="status">
-  <div class="status-card" id="statusCard">
-    <div class="status-title" id="statusTitle">Status</div>
-    <div class="status-main" id="statusMain">Carregando…</div>
-    <div class="status-sub" id="statusSub"></div>
-    <div class="live-tracks" id="liveTracks"></div>
+<section id="hero"></section>
+
+<main>
+  <div class="tracks-legend"></div>
+  <div class="filter-row">
+    <h2>Programação completa</h2>
+    <div class="tabs"></div>
   </div>
-</section>
-
-<div class="tabs"></div>
-
-<main id="agenda"></main>
+  <div id="agenda"></div>
+</main>
 
 <footer>
-  EloTech — realizado pelo <a href="https://gdgcampinas.dev" target="_blank" rel="noopener">GDG Campinas</a>, com a agibank como anfitriã.
+  <div class="venue-card" id="venue"></div>
+  <div class="credits">
+    EloTech — realizado pelo <a href="https://gdgcampinas.dev" target="_blank" rel="noopener">GDG Campinas</a>, com a agibank como anfitriã.
+    <span class="tag">#EloTech2026</span>
+  </div>
 </footer>
 
 <!--
@@ -57,10 +58,10 @@
   de fallback com onerror — funciona em qualquer navegador, sem depender
   de carregamento dinâmico assíncrono.
 -->
-<script src="schedule.dev.js" onerror="this.onerror=null;document.write('\x3Cscript src=&quot;schedule.js?v=4&quot;\x3E\x3C/script\x3E')"></script>
-<script src="track-card.js?v=4"></script>
-<script src="agenda.js?v=4"></script>
-<script src="live-status.js?v=4"></script>
-<script src="app.js?v=4"></script>
+<script src="schedule.dev.js" onerror="this.onerror=null;document.write('\x3Cscript src=&quot;schedule.js?v=5&quot;\x3E\x3C/script\x3E')"></script>
+<script src="track-card.js?v=5"></script>
+<script src="agenda.js?v=5"></script>
+<script src="live-status.js?v=5"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>

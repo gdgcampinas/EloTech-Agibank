@@ -1,7 +1,9 @@
 /**
- * Bootstrap: liga os módulos (agenda, filtro, status ao vivo) aos dados
- * definidos em schedule.js. Trocar de evento = trocar só schedule.js.
+ * Bootstrap: liga os módulos (header, agenda, filtro, status ao vivo)
+ * aos dados definidos em schedule.js/schedule.dev.js. Trocar de evento
+ * ou de sala/MC = trocar só esses dois arquivos, nada aqui.
  */
+
 /**
  * Overrides de URL pra testar em DEV sem tocar em schedule.js (PROD real):
  *   ?demo=2026-08-01T09:50  → simula a hora do evento (ativa "ao vivo agora")
@@ -31,19 +33,48 @@ function warnIfDemoMode() {
   document.body.prepend(banner);
 }
 
+function renderHeaderMeta(event, schedule, mountEl) {
+  const start = formatEventTime(schedule[0].start, event.timezone);
+  const end = formatEventTime(schedule[schedule.length - 1].end, event.timezone);
+  const dateLabel = schedule[0].start.toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric", timeZone: event.timezone });
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(event.address)}`;
+  mountEl.innerHTML = `
+    <span class="when">${dateLabel}</span>
+    <span class="sep">·</span>
+    <span class="when">${start} — ${end}</span>
+    <span class="sep">·</span>
+    <span>${event.venue}</span>
+    <a href="${directionsUrl}" target="_blank" rel="noopener">como chegar</a>`;
+}
+
+function renderVenue(event, mountEl) {
+  const mapQuery = encodeURIComponent(event.address);
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${mapQuery}`;
+  mountEl.innerHTML = `
+    <div class="venue-info">
+      <div class="label">Local</div>
+      <div class="addr">${event.venue}<br>${event.address}</div>
+      <a class="go" href="${directionsUrl}" target="_blank" rel="noopener">Como chegar</a>
+    </div>
+    <div class="venue-map">
+      <iframe src="https://www.google.com/maps?q=${mapQuery}&output=embed" loading="lazy" title="Mapa até ${event.venue}"></iframe>
+    </div>`;
+}
+
 function initApp() {
   warnIfDemoMode();
   const reveal = resolveReveal();
-  const tabsEl = document.querySelector(".tabs");
 
+  renderHeaderMeta(EVENT, SCHEDULE, document.getElementById("headerMeta"));
+  renderVenue(EVENT, document.getElementById("venue"));
+
+  const tabsEl = document.querySelector(".tabs");
   renderLegend(TRACKS, document.querySelector(".tracks-legend"));
   renderTabs(TRACKS, tabsEl);
   renderAgenda(SCHEDULE, TRACKS, EVENT.timezone, document.getElementById("agenda"), { reveal });
   initTrackFilter(tabsEl);
 
-  const statusSectionEl = document.getElementById("status");
-  const stickyEl = document.getElementById("stickyStatus");
-  initStickyStatus(statusSectionEl, stickyEl);
+  initStickyStatus(document.getElementById("hero"), document.getElementById("stickyStatus"));
 
   const liveStatus = createLiveStatus({
     schedule: SCHEDULE,
@@ -51,11 +82,8 @@ function initApp() {
     event: EVENT,
     reveal,
     elements: {
-      statusCard: document.getElementById("statusCard"),
-      statusTitle: document.getElementById("statusTitle"),
-      statusMain: document.getElementById("statusMain"),
-      statusSub: document.getElementById("statusSub"),
-      liveTracks: document.getElementById("liveTracks"),
+      statusPill: document.getElementById("statusPill"),
+      hero: document.getElementById("hero"),
       stickyTxt: document.getElementById("stickyTxt"),
       stickyPulse: document.getElementById("stickyPulse"),
     },
@@ -63,10 +91,8 @@ function initApp() {
   });
 
   liveStatus.tick();
-  setInterval(liveStatus.tick, 15000);
+  setInterval(liveStatus.tick, 1000);
 }
 
-// loader.js injeta este script depois que o DOM já está pronto
-// (document.head.appendChild acontece após o parse do body), então
-// não há DOMContentLoaded pra esperar — roda direto.
+// carregado depois que o DOM já está pronto (script no fim do body) — roda direto.
 initApp();

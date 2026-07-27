@@ -7,9 +7,20 @@ function formatEventTime(date, timezone) {
   return date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", timeZone: timezone });
 }
 
+function timeRangeLabel(slot, timezone) {
+  return `${formatEventTime(slot.start, timezone)} — ${formatEventTime(slot.end, timezone)}`;
+}
+
 function renderLegend(tracks, mountEl) {
   mountEl.innerHTML = tracks
-    .map(track => `<span><i class="dot" style="background:var(--${track.id})"></i>${track.label}</span>`)
+    .map(track => {
+      const sub = [track.mc && `MC ${track.mc}`, track.room].filter(Boolean).join(" · ");
+      return `
+        <div class="item">
+          <span class="name"><span class="dot" style="background:var(--${track.id})"></span>${track.label}</span>
+          ${sub ? `<span class="sub">${sub}</span>` : ""}
+        </div>`;
+    })
     .join("");
 }
 
@@ -26,8 +37,8 @@ function renderAgenda(schedule, tracks, timezone, mountEl, { reveal = true } = {
     .map((slot, index) => {
       const time = formatEventTime(slot.start, timezone);
       const body = slot.banner
-        ? `<div class="banner">${slot.banner}</div>`
-        : `<div class="talks" data-view="all">${tracks.map(track => trackCardMarkup(track, slot.talks[track.id], "agenda", { reveal })).join("")}</div>`;
+        ? `<div class="banner"><div class="t">${slot.banner}</div>${slot.room ? `<div class="r">${slot.room}</div>` : ""}</div>`
+        : `<div class="talks" data-view="all">${tracks.map(track => trackCardMarkup(track, slot.talks[track.id], { reveal, timeRange: timeRangeLabel(slot, timezone) })).join("")}</div>`;
       return `<div class="slot" data-index="${index}"><div class="slot-time">${time}</div>${body}</div>`;
     })
     .join("");
