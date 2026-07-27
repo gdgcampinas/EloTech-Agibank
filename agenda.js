@@ -21,13 +21,13 @@ function renderTabs(tracks, mountEl) {
   mountEl.innerHTML = allTab + trackTabs;
 }
 
-function renderAgenda(schedule, tracks, timezone, mountEl) {
+function renderAgenda(schedule, tracks, timezone, mountEl, { reveal = true } = {}) {
   mountEl.innerHTML = schedule
     .map((slot, index) => {
       const time = formatEventTime(slot.start, timezone);
       const body = slot.banner
         ? `<div class="banner">${slot.banner}</div>`
-        : `<div class="talks" data-view="all">${tracks.map(track => trackCardMarkup(track, slot.talks[track.id], "agenda")).join("")}</div>`;
+        : `<div class="talks" data-view="all">${tracks.map(track => trackCardMarkup(track, slot.talks[track.id], "agenda", { reveal })).join("")}</div>`;
       return `<div class="slot" data-index="${index}"><div class="slot-time">${time}</div>${body}</div>`;
     })
     .join("");

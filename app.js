@@ -3,18 +3,28 @@
  * definidos em schedule.js. Trocar de evento = trocar só schedule.js.
  */
 /**
- * Testar o "ao vivo agora" sem esperar o dia do evento:
- * abra o site com ?demo=2026-08-01T09:50 na URL (data+hora local do evento).
+ * Overrides de URL pra testar em DEV sem tocar em schedule.js (PROD real):
+ *   ?demo=2026-08-01T09:50  → simula a hora do evento (ativa "ao vivo agora")
+ *   ?lineup=1                → força mostrar palestrante/título mesmo com
+ *                              EVENT.lineupRevealed=false
  */
+function getParam(name) {
+  return new URLSearchParams(location.search).get(name);
+}
+
 function resolveNow() {
-  const demo = new URLSearchParams(location.search).get("demo");
+  const demo = getParam("demo");
   if (!demo) return () => new Date();
   const fixedNow = new Date(`${demo}:00${EVENT.utcOffset}`);
   return () => fixedNow;
 }
 
+function resolveReveal() {
+  return getParam("lineup") === "1" ? true : EVENT.lineupRevealed;
+}
+
 function warnIfDemoMode() {
-  if (!new URLSearchParams(location.search).get("demo")) return;
+  if (!getParam("demo")) return;
   const banner = document.createElement("div");
   banner.textContent = "⚠️ MODO TESTE — data simulada, não é o horário real do evento";
   banner.style.cssText = "background:#ea4335;color:#fff;text-align:center;font-size:.75rem;font-weight:700;padding:6px;position:sticky;top:0;z-index:100";
@@ -23,11 +33,12 @@ function warnIfDemoMode() {
 
 document.addEventListener("DOMContentLoaded", () => {
   warnIfDemoMode();
+  const reveal = resolveReveal();
   const tabsEl = document.querySelector(".tabs");
 
   renderLegend(TRACKS, document.querySelector(".tracks-legend"));
   renderTabs(TRACKS, tabsEl);
-  renderAgenda(SCHEDULE, TRACKS, EVENT.timezone, document.getElementById("agenda"));
+  renderAgenda(SCHEDULE, TRACKS, EVENT.timezone, document.getElementById("agenda"), { reveal });
   initTrackFilter(tabsEl);
 
   const statusSectionEl = document.getElementById("status");
@@ -38,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     schedule: SCHEDULE,
     tracks: TRACKS,
     event: EVENT,
+    reveal,
     elements: {
       statusCard: document.getElementById("statusCard"),
       statusTitle: document.getElementById("statusTitle"),

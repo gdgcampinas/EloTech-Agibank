@@ -8,7 +8,7 @@ function pad(n) {
   return String(n).padStart(2, "0");
 }
 
-function createLiveStatus({ schedule, tracks, event, elements, now = () => new Date() }) {
+function createLiveStatus({ schedule, tracks, event, elements, now = () => new Date(), reveal = true }) {
   const { statusCard, statusTitle, statusMain, statusSub, liveTracks, stickyTxt, stickyPulse } = elements;
 
   function setLive(isLive) {
@@ -59,8 +59,10 @@ function createLiveStatus({ schedule, tracks, event, elements, now = () => new D
 
     statusMain.textContent = "Palestras em andamento";
     statusSub.textContent = range;
-    liveTracks.innerHTML = tracks.map(track => trackCardMarkup(track, slot.talks[track.id], "live")).join("");
-    stickyTxt.textContent = `Agora: ${tracks.map(track => slot.talks[track.id].speaker).join(" · ")}`;
+    liveTracks.innerHTML = tracks.map(track => trackCardMarkup(track, slot.talks[track.id], "live", { reveal })).join("");
+    stickyTxt.textContent = reveal
+      ? `Agora: ${tracks.map(track => slot.talks[track.id].speaker).join(" · ")}`
+      : "Agora: confira sua trilha";
   }
 
   function renderBetweenSlots(now) {

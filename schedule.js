@@ -8,6 +8,10 @@ const EVENT = {
   timezone: "America/Sao_Paulo",
   utcOffset: "-03:00",
   venue: "Agi Campus, Campinas/SP",
+  // PROD = false: agenda mostra horário/trilha, esconde palestrante e título.
+  // Vira true no dia de revelar o line-up. Pra testar revelado sem mudar
+  // aqui, abra localmente com ?lineup=1 na URL (modo DEV).
+  lineupRevealed: false,
 };
 
 const TRACKS = [
