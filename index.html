@@ -176,10 +176,11 @@
   .talks{
     display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
   }
+  .talks[data-view]:not([data-view="all"]) .talk{display:none}
+  .talks[data-view]:not([data-view="all"]) .talk.shown{display:block}
+  .talks[data-view]:not([data-view="all"]){grid-template-columns:1fr}
   @media(max-width:720px){
     .talks{grid-template-columns:1fr}
-    .talks[data-view]:not([data-view="all"]) .talk{display:none}
-    .talks[data-view]:not([data-view="all"]) .talk[data-track].shown{display:block}
   }
 
   .talk{
