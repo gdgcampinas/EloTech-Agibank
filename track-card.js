@@ -20,7 +20,7 @@ function trackCardMarkup(track, data, { reveal = true, live = false, timeRange =
   const foot = footItems.length
     ? `<div class="foot">${footItems.map((item, i) => i === footItems.length - 1 && room
         ? `<span class="room-tag">${item}</span>`
-        : `<span>${item}</span>`).join("")}</div>`
+        : `<span class="time">${item}</span>`).join("")}</div>`
     : "";
 
   return `

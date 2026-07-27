@@ -180,7 +180,7 @@ main{max-width:1180px;margin:0 auto;padding:0 24px}
 #agenda{display:flex;flex-direction:column;gap:12px}
 
 .slot{display:grid;grid-template-columns:56px 1fr;gap:14px}
-.slot-time{font:600 13px "Public Sans",sans-serif;color:var(--muted-dim);padding-top:14px;font-variant-numeric:tabular-nums}
+.slot-time{font:700 13px "Public Sans",sans-serif;color:var(--text);padding-top:14px;font-variant-numeric:tabular-nums}
 .slot.active .slot-time{color:var(--text);font-weight:700}
 .slot.past{opacity:.4}
 
@@ -222,6 +222,7 @@ main{max-width:1180px;margin:0 auto;padding:0 24px}
 .talk .title{font:700 15.5px "Manrope",sans-serif;color:oklch(96% 0.006 260);line-height:1.35}
 .talk .speaker{font:600 12.5px "Public Sans",sans-serif;color:oklch(80% 0.01 260)}
 .talk .foot{margin-top:auto;padding-top:6px;display:flex;align-items:center;gap:8px;font:500 12px "Public Sans",sans-serif;color:var(--muted-dim)}
+.talk .foot .time{color:var(--text);font-weight:700}
 .talk .room-tag{
   font:600 11px "Public Sans",sans-serif;padding:2px 10px;border-radius:100px;
   background:color-mix(in oklch, var(--track-color, var(--muted)) 14%, transparent);
