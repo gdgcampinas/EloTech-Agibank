@@ -18,9 +18,9 @@ const EVENT = {
 
 // room/mc em branco = card não mostra a linha (ver track-card.js).
 const TRACKS = [
-  { id: "ia", label: "IA", shortLabel: "IA", room: "Sala Toy Story", mc: "Camila Duarte" },
-  { id: "webdata", label: "Front-end / Back-end / Data", shortLabel: "Front/Back/Data", room: "Sala Detona Ralph", mc: "Diego Nunes" },
-  { id: "mentoring", label: "Mentoring & Growth", shortLabel: "Mentoring & Growth", room: "Sala Up: Altas Aventuras", mc: "Fernanda Lopes" },
+  { id: "ia", label: "IA", shortLabel: "IA", room: "Arquibancada Agibank", mc: "Camila Duarte" },
+  { id: "webdata", label: "Front-end / Back-end / Data", shortLabel: "Front/Back/Data", room: "Uni Agi", mc: "Diego Nunes" },
+  { id: "mentoring", label: "Carreira em Tecnologia", shortLabel: "Carreira", room: "Sala de treinamento", mc: "Fernanda Lopes" },
 ];
 
 function eventTime(hhmm) {
