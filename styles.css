@@ -68,8 +68,8 @@ header{
   margin-bottom:14px;
 }
 .brand{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-.brand-gdg{height:26px;width:auto;flex:0 0 auto}
-.brand-agibank{height:16px;width:auto;flex:0 0 auto}
+.brand-gdg{height:40px;width:auto;flex:0 0 auto}
+.brand-agibank{height:26px;width:auto;flex:0 0 auto}
 .brand-plus{color:var(--muted-dim);font:700 13px "Public Sans",sans-serif}
 .brand span{font:700 13px "Public Sans",sans-serif;color:oklch(80% 0.01 260)}
 
