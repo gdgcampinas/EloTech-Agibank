@@ -15,6 +15,7 @@
   --mentoring: oklch(66% 0.19 27);
 
   /* acentos */
+  --neon: #2ee878;                /* fallback sólido — navegadores sem suporte a oklch usam este */
   --neon: oklch(82% 0.23 145);   /* datas, contador regressivo */
   --amber: var(--webdata);       /* CTAs (mesma cor da trilha Front/Back/Data, sem duplicar token) */
   --live: oklch(64% 0.21 25);    /* dot "AO VIVO" */
@@ -66,8 +67,10 @@ header{
   display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
   margin-bottom:14px;
 }
-.brand{display:flex;align-items:center;gap:12px}
-.brand img{width:38px;height:38px;border-radius:50%;object-fit:cover;flex:0 0 auto}
+.brand{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.brand-gdg{height:26px;width:auto;flex:0 0 auto}
+.brand-agibank{height:16px;width:auto;flex:0 0 auto}
+.brand-plus{color:var(--muted-dim);font:700 13px "Public Sans",sans-serif}
 .brand span{font:700 13px "Public Sans",sans-serif;color:oklch(80% 0.01 260)}
 
 .status-pill{
