@@ -87,8 +87,13 @@
   .logo span:nth-child(6){color:var(--yellow)}
   .logo span:nth-child(7){color:var(--red)}
 
-  .presented{color:var(--muted);font-size:.9rem;margin:0 0 18px}
-  .presented b{color:var(--text)}
+  .presented{
+    display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+    color:var(--text);font-size:.95rem;font-weight:700;margin:0 0 18px;
+  }
+  .presented .plus{color:var(--muted);font-weight:400}
+  .presented .brand-icon{height:26px;width:auto}
+  .presented .brand-agibank{height:20px;width:auto}
 
   .meta{
     display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
@@ -213,7 +218,12 @@
 
 <header>
   <h1 class="logo"><span>E</span><span>l</span><span>o</span><span>T</span><span>e</span><span>c</span><span>h</span></h1>
-  <p class="presented"><b>GDG Campinas</b> + <b>agibank</b></p>
+  <div class="presented">
+    <img src="gdg-icon.png" alt="GDG Campinas" class="brand-icon">
+    <span>GDG Campinas</span>
+    <span class="plus">+</span>
+    <img src="agibank-icon.png" alt="agibank" class="brand-agibank">
+  </div>
   <div class="meta">
     <span>📅 01 de agosto de 2026</span>
     <span>🕗 08:00 — 13:00</span>
