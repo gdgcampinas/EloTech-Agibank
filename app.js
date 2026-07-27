@@ -69,10 +69,11 @@ function initApp() {
   renderVenue(EVENT, document.getElementById("venue"));
 
   const tabsEl = document.querySelector(".tabs");
+  const agendaEl = document.getElementById("agenda");
   renderLegend(TRACKS, document.querySelector(".tracks-legend"));
   renderTabs(TRACKS, tabsEl);
-  renderAgenda(SCHEDULE, TRACKS, EVENT.timezone, document.getElementById("agenda"), { reveal });
-  initTrackFilter(tabsEl);
+  renderAgenda(SCHEDULE, TRACKS, EVENT.timezone, agendaEl, { reveal });
+  initTrackFilter(tabsEl, agendaEl);
 
   initStickyStatus(document.getElementById("hero"), document.getElementById("stickyStatus"));
 

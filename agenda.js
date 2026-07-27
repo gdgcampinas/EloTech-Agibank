@@ -44,7 +44,11 @@ function renderAgenda(schedule, tracks, timezone, mountEl, { reveal = true } = {
     .join("");
 }
 
-function initTrackFilter(tabsEl) {
+/**
+ * scopeEl delimita onde o filtro atua — só a agenda completa, nunca o
+ * card "acontecendo agora" do hero (mesmo que reaproveite .talks/.talk).
+ */
+function initTrackFilter(tabsEl, scopeEl) {
   tabsEl.addEventListener("click", event => {
     const btn = event.target.closest(".tab");
     if (!btn) return;
@@ -53,8 +57,8 @@ function initTrackFilter(tabsEl) {
     btn.classList.add("active");
 
     const track = btn.dataset.track;
-    document.querySelectorAll(".talks").forEach(t => (t.dataset.view = track));
-    document.querySelectorAll(".talk").forEach(card => {
+    scopeEl.querySelectorAll(".talks").forEach(t => (t.dataset.view = track));
+    scopeEl.querySelectorAll(".talk").forEach(card => {
       card.classList.toggle("shown", track === "all" || card.dataset.track === track);
     });
   });
