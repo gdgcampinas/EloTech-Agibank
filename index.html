@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EloTech 2026 — Agenda</title>
+<meta name="description" content="Agenda ao vivo do EloTech — GDG Campinas + agibank, 01/08/2026">
+<meta name="theme-color" content="#05060a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="EloTech">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305060a'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Arial,sans-serif' font-weight='800' text-anchor='middle' fill='%234285f4'%3EE%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2305060a'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Arial,sans-serif' font-weight='800' text-anchor='middle' fill='%234285f4'%3EE%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#05060a;
+    --card:#0e1018;
+    --card-border:#1c2030;
+    --text:#f2f3f7;
+    --muted:#8b90a3;
+    --ia:#22d3ee;
+    --webdata:#a78bfa;
+    --mentoring:#fb923c;
+    --banner:#ffd400;
+    --lime:#c6ff2e;
+    --red:#ea4335;
+    --yellow:#fbbc05;
+    --green:#34a853;
+    --blue:#4285f4;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(66,133,244,.12), transparent 60%),
+      radial-gradient(1000px 500px at 100% 0%, rgba(198,255,46,.08), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,sans-serif;
+    min-height:100vh;
+    padding-bottom:calc(48px + env(safe-area-inset-bottom));
+    padding-top:env(safe-area-inset-top);
+    -webkit-tap-highlight-color:transparent;
+  }
+  #stickyStatus{
+    position:sticky;top:0;z-index:50;
+    display:none;
+    padding:8px 14px;
+    background:rgba(5,6,10,.92);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--card-border);
+  }
+  #stickyStatus.show{display:block}
+  #stickyStatus .row{
+    display:flex;align-items:center;gap:8px;max-width:880px;margin:0 auto;
+    font-size:.82rem;font-weight:600;
+  }
+  #stickyStatus .pulse{
+    display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lime);flex:0 0 auto;
+    animation:pulse 1.6s infinite;
+  }
+  #stickyStatus .txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  a{color:inherit}
+
+  header{
+    padding:28px 18px 18px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .logo{
+    font-size:clamp(2.4rem,9vw,3.6rem);
+    font-weight:800;
+    letter-spacing:-1px;
+    margin:0 0 6px;
+  }
+  .logo span:nth-child(1){color:var(--red)}
+  .logo span:nth-child(2){color:var(--blue)}
+  .logo span:nth-child(3){color:var(--yellow)}
+  .logo span:nth-child(4){color:var(--blue)}
+  .logo span:nth-child(5){color:var(--green)}
+  .logo span:nth-child(6){color:var(--yellow)}
+  .logo span:nth-child(7){color:var(--red)}
+
+  .presented{color:var(--muted);font-size:.9rem;margin:0 0 18px}
+  .presented b{color:var(--text)}
+
+  .meta{
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+    font-size:.85rem;color:var(--muted);margin-bottom:6px;
+  }
+  .meta span{
+    background:var(--card);border:1px solid var(--card-border);
+    padding:6px 12px;border-radius:999px;
+  }
+
+  .tracks-legend{
+    display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+    margin-top:16px;font-size:.78rem;
+  }
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+  /* status / ao vivo */
+  #status{
+    max-width:880px;margin:0 auto 24px;padding:0 14px;
+  }
+  .status-card{
+    background:var(--card);border:1px solid var(--card-border);
+    border-radius:var(--radius);padding:18px 20px;text-align:center;
+  }
+  .status-card.live{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime) inset,0 0 24px rgba(198,255,46,.15)}
+  .status-title{font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px}
+  .status-title .pulse{
+    display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--lime);
+    margin-right:7px;box-shadow:0 0 0 0 rgba(198,255,46,.6);
+    animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(198,255,46,.6)}
+    70%{box-shadow:0 0 0 9px rgba(198,255,46,0)}
+    100%{box-shadow:0 0 0 0 rgba(198,255,46,0)}
+  }
+  .status-main{font-size:1.05rem;font-weight:600}
+  .status-sub{color:var(--muted);font-size:.85rem;margin-top:4px}
+  .live-tracks{
+    display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px;text-align:left;
+  }
+  @media(min-width:720px){.live-tracks{grid-template-columns:repeat(3,1fr)}}
+  .live-track{
+    border-radius:10px;padding:10px 12px;background:rgba(255,255,255,.03);
+    border-left:3px solid var(--card-border);
+  }
+  .live-track .tname{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+  .live-track .tspeaker{font-weight:600;margin-top:3px;font-size:.9rem}
+  .live-track .ttitle{font-size:.82rem;color:var(--muted);margin-top:2px}
+
+  /* tabs */
+  .tabs{
+    max-width:880px;margin:0 auto 18px;padding:0 14px;
+    display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{
+    flex:0 0 auto;padding:9px 16px;border-radius:999px;font-size:.85rem;font-weight:600;
+    background:var(--card);border:1px solid var(--card-border);color:var(--muted);cursor:pointer;
+    white-space:nowrap;
+  }
+  .tab.active{color:#050810;background:var(--text);border-color:var(--text)}
+  .tab[data-track="ia"].active{background:var(--ia);border-color:var(--ia)}
+  .tab[data-track="webdata"].active{background:var(--webdata);border-color:var(--webdata)}
+  .tab[data-track="mentoring"].active{background:var(--mentoring);border-color:var(--mentoring)}
+
+  /* agenda */
+  #agenda{max-width:1080px;margin:0 auto;padding:0 14px;display:flex;flex-direction:column;gap:12px}
+
+  .slot{
+    display:grid;grid-template-columns:64px 1fr;gap:12px;
+  }
+  .slot-time{
+    font-size:.78rem;color:var(--muted);padding-top:12px;font-variant-numeric:tabular-nums;
+  }
+  .slot.active .slot-time{color:var(--lime);font-weight:700}
+
+  .banner{
+    background:linear-gradient(90deg, rgba(255,212,0,.14), rgba(255,212,0,.04));
+    border:1px solid rgba(255,212,0,.35);
+    border-radius:var(--radius);
+    padding:12px 16px;font-weight:700;font-size:.88rem;color:var(--banner);
+    display:flex;align-items:center;
+  }
+
+  .talks{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  }
+  @media(max-width:720px){
+    .talks{grid-template-columns:1fr}
+    .talks[data-view]:not([data-view="all"]) .talk{display:none}
+    .talks[data-view]:not([data-view="all"]) .talk[data-track].shown{display:block}
+  }
+
+  .talk{
+    background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius);
+    padding:12px 14px;border-top:3px solid var(--card-border);
+  }
+  .talk[data-track="ia"]{border-top-color:var(--ia)}
+  .talk[data-track="webdata"]{border-top-color:var(--webdata)}
+  .talk[data-track="mentoring"]{border-top-color:var(--mentoring)}
+  .talk .track-label{font-size:.66rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+  .talk[data-track="ia"] .track-label{color:var(--ia)}
+  .talk[data-track="webdata"] .track-label{color:var(--webdata)}
+  .talk[data-track="mentoring"] .track-label{color:var(--mentoring)}
+  .talk .speaker{font-weight:700;font-size:.92rem}
+  .talk .title{font-size:.82rem;color:var(--muted);margin-top:4px;line-height:1.35}
+
+  .slot.active .talk{box-shadow:0 0 0 1px var(--lime) inset}
+
+  footer{
+    text-align:center;color:var(--muted);font-size:.78rem;margin-top:36px;padding:0 14px;
+  }
+  footer a{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div id="stickyStatus"><div class="row"><span class="pulse" id="stickyPulse"></span><span class="txt" id="stickyTxt"></span></div></div>
+
+<header>
+  <h1 class="logo"><span>E</span><span>l</span><span>o</span><span>T</span><span>e</span><span>c</span><span>h</span></h1>
+  <p class="presented"><b>GDG Campinas</b> + <b>agibank</b></p>
+  <div class="meta">
+    <span>📅 01 de agosto de 2026</span>
+    <span>🕗 08:00 — 13:00</span>
+    <span>📍 Agi Campus, Campinas/SP</span>
+  </div>
+  <div class="tracks-legend">
+    <span><i class="dot" style="background:var(--ia)"></i>IA</span>
+    <span><i class="dot" style="background:var(--webdata)"></i>Front-end / Back-end / Data</span>
+    <span><i class="dot" style="background:var(--mentoring)"></i>Mentoring & Growth</span>
+  </div>
+</header>
+
+<section id="status">
+  <div class="status-card" id="statusCard">
+    <div class="status-title" id="statusTitle">Status</div>
+    <div class="status-main" id="statusMain">Carregando…</div>
+    <div class="status-sub" id="statusSub"></div>
+    <div class="live-tracks" id="liveTracks"></div>
+  </div>
+</section>
+
+<div class="tabs">
+  <button class="tab active" data-track="all">Todas as trilhas</button>
+  <button class="tab" data-track="ia">IA</button>
+  <button class="tab" data-track="webdata">Front/Back/Data</button>
+  <button class="tab" data-track="mentoring">Mentoring & Growth</button>
+</div>
+
+<main id="agenda"></main>
+
+<footer>
+  EloTech — realizado pelo <a href="https://gdgcampinas.dev" target="_blank" rel="noopener">GDG Campinas</a>, com a agibank como anfitriã.
+</footer>
+
+<script>
+// ---- dados da agenda ----
+// horários em America/Sao_Paulo (UTC-3, sem horário de verão)
+const EVENT_DATE = "2026-08-01";
+function t(hhmm){ return new Date(`${EVENT_DATE}T${hhmm}:00-03:00`); }
+
+const TRACK_LABEL = { ia: "IA", webdata: "Front-end / Back-end / Data", mentoring: "Mentoring & Growth" };
+
+const SCHEDULE = [
+  { start:t("08:00"), end:t("08:30"), banner:"Credenciamento — Full Evento" },
+  { start:t("08:30"), end:t("08:50"), banner:"Apresentação GDG Campinas + agibank" },
+  { start:t("09:00"), end:t("09:35"), talks:{
+      ia:{ speaker:"agibank", title:"" },
+      webdata:{ speaker:"Kevin Uehara", title:"Exploring Google's AI ecosystem for the modern web" },
+      mentoring:{ speaker:"agibank", title:"" },
+  }},
+  { start:t("09:40"), end:t("10:15"), talks:{
+      ia:{ speaker:"Fabio Baldin", title:"Da ideia ao MVP antes do café acabar. Como a IA muda o que vem antes do código." },
+      webdata:{ speaker:"Vinicius Pivetta", title:"Como a IA generativa está mudando o trabalho do engenheiro de dados" },
+      mentoring:{ speaker:"Helson Carlos dos Santos", title:"Como formar o novo desenvolvedor sênior em tempos de IA" },
+  }},
+  { start:t("10:20"), end:t("10:55"), talks:{
+      ia:{ speaker:"Toshi Ossada", title:"Vamos falar de Inteligência Artificial? Desenvolvendo apps inteligentes com Flutter e Gemini" },
+      webdata:{ speaker:"Beatriz Rodrigues", title:"Data Power: como os dados moldam o mundo (e a sua carreira)" },
+      mentoring:{ speaker:"Jessé Freitas", title:"O próximo capítulo da Engenharia" },
+  }},
+  { start:t("11:00"), end:t("11:35"), banner:"Pausa / Intervalo" },
+  { start:t("11:40"), end:t("12:15"), talks:{
+      ia:{ speaker:"Guilherme H Silva", title:"Domando Multi-Agentes em Go com Phoenix" },
+      webdata:{ speaker:"Ghabryel Henrique Ferreira e Almeida", title:"Arquitetura Limpa no Frontend: escalando aplicações para o mundo real" },
+      mentoring:{ speaker:"Marco Ollivier", title:"Toda startup começa com gambiarra, e isso pode ser uma ótima decisão" },
+  }},
+  { start:t("12:20"), end:t("12:55"), talks:{
+      ia:{ speaker:"Leonardo Veri", title:"Clareza: a verdadeira oportunidade da Inteligência Artificial" },
+      webdata:{ speaker:"Larissa Azevedo", title:"Front-end é o novo Full Stack? A evolução que transformou o papel do desenvolvedor" },
+      mentoring:{ speaker:"Alex Tavares Faiotto", title:"Como pensar como um arquiteto de software" },
+  }},
+  { start:t("13:00"), end:t("13:20"), banner:"Encerramento e sorteios — Keynote final" },
+];
+
+// ---- render agenda ----
+const agendaEl = document.getElementById("agenda");
+const fmt = d => d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit",timeZone:"America/Sao_Paulo"});
+
+SCHEDULE.forEach((slot,i)=>{
+  const wrap = document.createElement("div");
+  wrap.className = "slot";
+  wrap.dataset.index = i;
+
+  const time = document.createElement("div");
+  time.className = "slot-time";
+  time.textContent = fmt(slot.start);
+  wrap.appendChild(time);
+
+  if(slot.banner){
+    const b = document.createElement("div");
+    b.className = "banner";
+    b.textContent = slot.banner;
+    wrap.appendChild(b);
+  } else {
+    const talks = document.createElement("div");
+    talks.className = "talks";
+    talks.dataset.view = "all";
+    ["ia","webdata","mentoring"].forEach(trackKey=>{
+      const d = slot.talks[trackKey];
+      const card = document.createElement("div");
+      card.className = "talk";
+      card.dataset.track = trackKey;
+      card.innerHTML = `
+        <div class="track-label">${TRACK_LABEL[trackKey]}</div>
+        <div class="speaker">${d.speaker}</div>
+        ${d.title ? `<div class="title">${d.title}</div>` : ""}
+      `;
+      talks.appendChild(card);
+    });
+    wrap.appendChild(talks);
+  }
+
+  agendaEl.appendChild(wrap);
+});
+
+// ---- filtro por trilha ----
+document.querySelectorAll(".tab").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    const track = btn.dataset.track;
+    document.querySelectorAll(".talks").forEach(t=>t.dataset.view = track);
+    document.querySelectorAll(".talk").forEach(card=>{
+      card.classList.toggle("shown", track==="all" || card.dataset.track===track);
+    });
+  });
+});
+
+// ---- status "ao vivo" ----
+const statusCard = document.getElementById("statusCard");
+const statusTitle = document.getElementById("statusTitle");
+const statusMain = document.getElementById("statusMain");
+const statusSub = document.getElementById("statusSub");
+const liveTracks = document.getElementById("liveTracks");
+const stickyStatus = document.getElementById("stickyStatus");
+const stickyTxt = document.getElementById("stickyTxt");
+const stickyPulse = document.getElementById("stickyPulse");
+
+// mostra a barra fixa só quando o card principal de status sai da tela (rolando a agenda)
+new IntersectionObserver(([entry])=>{
+  stickyStatus.classList.toggle("show", !entry.isIntersecting);
+}, { threshold: 0 }).observe(document.getElementById("status"));
+
+function pad(n){ return String(n).padStart(2,"0"); }
+
+function updateStatus(){
+  const now = new Date();
+  document.querySelectorAll(".slot").forEach(el=>el.classList.remove("active"));
+
+  const first = SCHEDULE[0].start;
+  const last = SCHEDULE[SCHEDULE.length-1].end;
+
+  if(now < first){
+    const diff = first - now;
+    const days = Math.floor(diff/86400000);
+    const hours = Math.floor((diff%86400000)/3600000);
+    const mins = Math.floor((diff%3600000)/60000);
+    statusCard.classList.remove("live");
+    statusTitle.textContent = "Contagem regressiva";
+    statusMain.textContent = days > 0
+      ? `Faltam ${days} dia${days!==1?"s":""} para o EloTech`
+      : `Começa em ${pad(hours)}h${pad(mins)}min`;
+    statusSub.textContent = "01/08/2026 · 08:00 · Agi Campus, Campinas/SP";
+    liveTracks.innerHTML = "";
+    stickyPulse.style.display = "none";
+    stickyTxt.textContent = statusMain.textContent;
+    return;
+  }
+
+  if(now > last){
+    statusCard.classList.remove("live");
+    statusTitle.textContent = "Encerrado";
+    statusMain.textContent = "Valeu por participar do EloTech! 💙";
+    statusSub.textContent = "Até a próxima edição.";
+    liveTracks.innerHTML = "";
+    stickyPulse.style.display = "none";
+    stickyTxt.textContent = statusMain.textContent;
+    return;
+  }
+
+  const activeIndex = SCHEDULE.findIndex(s => now >= s.start && now < s.end);
+  const active = activeIndex >= 0 ? SCHEDULE[activeIndex] : null;
+
+  statusCard.classList.add("live");
+  statusTitle.innerHTML = '<span class="pulse"></span>Ao vivo agora';
+  stickyPulse.style.display = "inline-block";
+
+  if(active){
+    document.querySelector(`.slot[data-index="${activeIndex}"]`)?.classList.add("active");
+    if(active.banner){
+      statusMain.textContent = active.banner;
+      statusSub.textContent = `${fmt(active.start)} — ${fmt(active.end)}`;
+      liveTracks.innerHTML = "";
+      stickyTxt.textContent = active.banner;
+    } else {
+      statusMain.textContent = "Palestras em andamento";
+      statusSub.textContent = `${fmt(active.start)} — ${fmt(active.end)}`;
+      liveTracks.innerHTML = ["ia","webdata","mentoring"].map(k=>{
+        const d = active.talks[k];
+        return `<div class="live-track" style="border-left-color:var(--${k==='ia'?'ia':k==='webdata'?'webdata':'mentoring'})">
+          <div class="tname">${TRACK_LABEL[k]}</div>
+          <div class="tspeaker">${d.speaker}</div>
+          ${d.title ? `<div class="ttitle">${d.title}</div>` : ""}
+        </div>`;
+      }).join("");
+      const names = ["ia","webdata","mentoring"].map(k=>active.talks[k].speaker).join(" · ");
+      stickyTxt.textContent = `Agora: ${names}`;
+    }
+  } else {
+    // entre slots (transição/troca)
+    const nextIndex = SCHEDULE.findIndex(s => now < s.start);
+    const next = SCHEDULE[nextIndex];
+    statusMain.textContent = "Intervalo entre palestras";
+    statusSub.textContent = next ? `Próximo bloco às ${fmt(next.start)}` : "";
+    liveTracks.innerHTML = "";
+    stickyTxt.textContent = next ? `Intervalo — próximo bloco às ${fmt(next.start)}` : "Intervalo";
+  }
+}
+
+updateStatus();
+setInterval(updateStatus, 15000);
+</script>
+</body>
+</html>
