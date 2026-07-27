@@ -96,7 +96,7 @@ header{
 }
 .meta-line .when{color:var(--neon);font-weight:700}
 .meta-line .sep{color:var(--muted-dim)}
-.meta-line .venue{color:var(--amber);font-weight:700}
+.meta-line .venue{color:var(--amber);font-weight:700;text-decoration:underline;text-underline-offset:2px}
 .meta-line a{color:var(--amber);text-decoration:underline;text-underline-offset:2px;font-weight:700}
 
 /* hero */
