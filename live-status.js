@@ -8,7 +8,7 @@ function pad(n) {
   return String(n).padStart(2, "0");
 }
 
-function createLiveStatus({ schedule, tracks, event, elements }) {
+function createLiveStatus({ schedule, tracks, event, elements, now = () => new Date() }) {
   const { statusCard, statusTitle, statusMain, statusSub, liveTracks, stickyTxt, stickyPulse } = elements;
 
   function setLive(isLive) {
@@ -72,19 +72,19 @@ function createLiveStatus({ schedule, tracks, event, elements }) {
   }
 
   function tick() {
-    const now = new Date();
+    const currentTime = now();
     clearActiveSlot();
 
     const first = schedule[0].start;
     const last = schedule[schedule.length - 1].end;
 
-    if (now < first) return renderCountdown(now, first);
-    if (now > last) return renderEnded();
+    if (currentTime < first) return renderCountdown(currentTime, first);
+    if (currentTime > last) return renderEnded();
 
     setLive(true);
-    const activeIndex = schedule.findIndex(s => now >= s.start && now < s.end);
+    const activeIndex = schedule.findIndex(s => currentTime >= s.start && currentTime < s.end);
     if (activeIndex >= 0) renderActiveSlot(schedule[activeIndex], activeIndex);
-    else renderBetweenSlots(now);
+    else renderBetweenSlots(currentTime);
   }
 
   return { tick };
