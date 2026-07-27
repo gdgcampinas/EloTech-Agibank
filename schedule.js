@@ -17,11 +17,10 @@ const EVENT = {
 };
 
 // room/mc em branco = card não mostra a linha (ver track-card.js).
-// Preencher quando a organização definir salas e mestres de cerimônia.
 const TRACKS = [
-  { id: "ia", label: "IA", shortLabel: "IA", room: "", mc: "" },
-  { id: "webdata", label: "Front-end / Back-end / Data", shortLabel: "Front/Back/Data", room: "", mc: "" },
-  { id: "mentoring", label: "Mentoring & Growth", shortLabel: "Mentoring & Growth", room: "", mc: "" },
+  { id: "ia", label: "IA", shortLabel: "IA", room: "Sala Toy Story", mc: "Camila Duarte" },
+  { id: "webdata", label: "Front-end / Back-end / Data", shortLabel: "Front/Back/Data", room: "Sala Detona Ralph", mc: "Diego Nunes" },
+  { id: "mentoring", label: "Mentoring & Growth", shortLabel: "Mentoring & Growth", room: "Sala Up: Altas Aventuras", mc: "Fernanda Lopes" },
 ];
 
 function eventTime(hhmm) {
@@ -31,13 +30,13 @@ function eventTime(hhmm) {
 const MOCK_TALK = { speaker: "Em breve", title: "Palestrante e tema a confirmar" };
 
 const SCHEDULE = [
-  { start: eventTime("08:00"), end: eventTime("08:30"), banner: "Credenciamento — Full Evento" },
-  { start: eventTime("08:30"), end: eventTime("08:50"), banner: "Apresentação GDG Campinas + agibank" },
+  { start: eventTime("08:00"), end: eventTime("08:30"), banner: "Credenciamento — Full Evento", room: "Hall" },
+  { start: eventTime("08:30"), end: eventTime("08:50"), banner: "Apresentação GDG Campinas + agibank", room: "Auditório" },
   { start: eventTime("09:00"), end: eventTime("09:35"), talks: { ia: MOCK_TALK, webdata: MOCK_TALK, mentoring: MOCK_TALK } },
   { start: eventTime("09:40"), end: eventTime("10:15"), talks: { ia: MOCK_TALK, webdata: MOCK_TALK, mentoring: MOCK_TALK } },
   { start: eventTime("10:20"), end: eventTime("10:55"), talks: { ia: MOCK_TALK, webdata: MOCK_TALK, mentoring: MOCK_TALK } },
   { start: eventTime("11:00"), end: eventTime("11:35"), banner: "Pausa / Intervalo" },
   { start: eventTime("11:40"), end: eventTime("12:15"), talks: { ia: MOCK_TALK, webdata: MOCK_TALK, mentoring: MOCK_TALK } },
   { start: eventTime("12:20"), end: eventTime("12:55"), talks: { ia: MOCK_TALK, webdata: MOCK_TALK, mentoring: MOCK_TALK } },
-  { start: eventTime("13:00"), end: eventTime("13:20"), banner: "Encerramento e sorteios — Keynote final" },
+  { start: eventTime("13:00"), end: eventTime("13:20"), banner: "Encerramento e sorteios — Keynote final", room: "Auditório" },
 ];
