@@ -74,15 +74,18 @@ function renderHeaderMeta(event, schedule, mountEl) {
 }
 
 function renderVenue(event, mountEl) {
-  const { directions, embed } = googleMapsUrls(event.address);
+  // sem mapa embutido de propósito: o campus é de acesso restrito
+  // (empresa fechada), sem sentido expor o mapa público de navegação.
+  const { directions } = googleMapsUrls(event.address);
   mountEl.innerHTML = `
     <div class="venue-info">
       <div class="label">Local</div>
       <div class="addr">${event.venue}<br>${event.address}</div>
       <a class="go" href="${directions}" target="_blank" rel="noopener">Como chegar</a>
     </div>
-    <div class="venue-map">
-      <iframe src="${embed}" loading="lazy" title="Mapa até ${event.venue}"></iframe>
+    <div class="venue-qr">
+      <img src="qrcode.png" alt="QR code para esta agenda" width="120" height="120">
+      <span>Aponte a câmera para abrir a agenda</span>
     </div>`;
 }
 
