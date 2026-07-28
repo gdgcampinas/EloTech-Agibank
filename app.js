@@ -60,6 +60,24 @@ function googleMapsUrls(address) {
   };
 }
 
+/** yyyymmddThhmmssZ — formato exigido pelo link de adicionar ao Google Calendar. */
+function toGCalStamp(date) {
+  return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+}
+
+function googleCalendarUrl(event, schedule) {
+  const start = schedule[0].start;
+  const end = schedule[schedule.length - 1].end;
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: event.name,
+    dates: `${toGCalStamp(start)}/${toGCalStamp(end)}`,
+    location: `${event.venue}, ${event.address}`,
+    details: `Agenda ao vivo: ${location.href}`,
+  });
+  return `https://calendar.google.com/calendar/render?${params}`;
+}
+
 function renderHeaderMeta(event, schedule, mountEl) {
   const start = hourLabel(schedule[0].start, event.timezone);
   const end = hourLabel(schedule[schedule.length - 1].end, event.timezone);
@@ -73,14 +91,18 @@ function renderHeaderMeta(event, schedule, mountEl) {
     <a class="venue-link" href="${directions}" target="_blank" rel="noopener">${event.venue} · como chegar</a>`;
 }
 
-function renderVenue(event, mountEl) {
+function renderVenue(event, mountEl, schedule) {
   // mapa externo (endereço/entrada) pode; planta interna do prédio, não.
   const { directions, embed } = googleMapsUrls(event.address);
+  const gcal = googleCalendarUrl(event, schedule);
   mountEl.innerHTML = `
     <div class="venue-info">
       <div class="label">Local</div>
       <div class="addr">${event.venue}<br>${event.address}</div>
-      <a class="go" href="${directions}" target="_blank" rel="noopener">Como chegar</a>
+      <div class="venue-actions">
+        <a class="go" href="${directions}" target="_blank" rel="noopener">Como chegar</a>
+        <a class="go go-outline" href="${gcal}" target="_blank" rel="noopener">+ Calendário</a>
+      </div>
       <div class="venue-qr">
         <img src="qrcode.png" alt="QR code para esta agenda" width="96" height="96">
         <span>Aponte a câmera para abrir a agenda</span>
@@ -96,7 +118,7 @@ function initApp() {
   const reveal = resolveReveal();
 
   renderHeaderMeta(EVENT, SCHEDULE, document.getElementById("headerMeta"));
-  renderVenue(EVENT, document.getElementById("venue"));
+  renderVenue(EVENT, document.getElementById("venue"), SCHEDULE);
 
   const tabsEl = document.querySelector(".tabs");
   const agendaEl = document.getElementById("agenda");

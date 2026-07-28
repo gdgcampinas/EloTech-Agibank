@@ -29,6 +29,7 @@ const SCHEDULE = [
       ia: { speaker: "agibank", title: "" },
       webdata: {
         speaker: "Kevin Uehara",
+        linkedin: "https://www.linkedin.com/in/kevin-uehara/",
         title: "Exploring Google's AI ecosystem for the modern web",
         description: "O front-end entrou oficialmente na era AI-First. Uma visão prática das Web AI APIs no Chrome, do Gemini rodando direto no navegador e do Chrome WebMCP para integrar IA de forma real nas aplicações web.",
       },
@@ -37,16 +38,19 @@ const SCHEDULE = [
   { start: eventTime("09:40"), end: eventTime("10:15"), talks: {
       ia: {
         speaker: "Fabio Baldin",
+        linkedin: "https://br.linkedin.com/in/fabiobaldin",
         title: "Da ideia ao MVP antes do café acabar. Como a IA muda o que vem antes do código.",
         description: "Um workflow prático usando Google Docs, NotebookLM, Gemini e Lovable para transformar uma ideia em MVP funcional rapidamente — sem cair no overengineering antes mesmo de validar a hipótese.",
       },
       webdata: {
         speaker: "Vinicius Pivetta",
+        linkedin: "https://www.linkedin.com/in/viniciuspivetta",
         title: "Como a IA generativa está mudando o trabalho do engenheiro de dados",
         description: "O impacto da IA generativa no dia a dia de quem trabalha com dados: novas formas de interação, riscos à qualidade e quais habilidades continuam relevantes nesse novo cenário.",
       },
       mentoring: {
         speaker: "Helson Carlos dos Santos",
+        linkedin: "https://www.linkedin.com/in/helsonsant",
         title: "Como formar o novo desenvolvedor sênior em tempos de IA",
         description: "Como a IA está mudando a formação de desenvolvedores juniores — o que ela não substitui, e qual é o papel dos seniores na formação dessa nova geração.",
       },
@@ -54,16 +58,19 @@ const SCHEDULE = [
   { start: eventTime("10:20"), end: eventTime("10:55"), talks: {
       ia: {
         speaker: "Toshi Ossada",
+        linkedin: "https://www.linkedin.com/in/toshiossada/",
         title: "Vamos falar de Inteligência Artificial? Usando o poder da GenUI em seus Apps Flutter",
         description: "A interseção entre IA e desenvolvimento mobile: como usar GenUI (interface generativa) para criar interfaces dinâmicas em apps Flutter.",
       },
       webdata: {
         speaker: "Beatriz Rodrigues",
+        linkedin: "https://www.linkedin.com/in/beatrizmsrodrigues",
         title: "Data Power: como os dados moldam o mundo (e a sua carreira)",
         description: "Um guia prático sobre o impacto dos dados no mundo, as ferramentas mais exigidas pelo mercado hoje e como entrar e se diferenciar na área de dados.",
       },
       mentoring: {
         speaker: "Jessé Freitas",
+        linkedin: "https://www.linkedin.com/in/jesse--freitas/",
         title: "O próximo capítulo da Engenharia",
         description: "A ascensão do perfil \"builder\", a mentalidade de abundância e a orquestração de agentes de IA — como papéis técnicos e de produto estão se fundindo nesse novo capítulo da engenharia.",
       },
@@ -72,16 +79,19 @@ const SCHEDULE = [
   { start: eventTime("11:40"), end: eventTime("12:15"), talks: {
       ia: {
         speaker: "Guilherme H Silva",
+        linkedin: "https://www.linkedin.com/in/br4tech/",
         title: "Domando Multi-Agentes em Go com Phoenix",
         description: "Orquestração e observabilidade de agentes de IA em produção, com versionamento de prompts e gerenciamento de datasets na prática, usando Go e Phoenix.",
       },
       webdata: {
         speaker: "Ghabryel Henrique Ferreira e Almeida",
+        linkedin: "https://www.linkedin.com/in/ghabryelhenrique/",
         title: "Arquitetura Limpa no Frontend: escalando aplicações para o mundo real",
         description: "Clean Architecture e princípios SOLID aplicados ao frontend: separação de responsabilidades para construir código mais resiliente, escalável e testável.",
       },
       mentoring: {
         speaker: "Marco Ollivier",
+        linkedin: "https://www.linkedin.com/in/marcopollivier",
         title: "Toda startup começa com gambiarra, e isso pode ser uma ótima decisão",
         description: "Nem toda boa arquitetura nasce elegante. Muitas começam conectando ferramentas, automatizando planilhas, usando soluções prontas e escrevendo apenas o código necessário para validar hipóteses.\n\nNesta palestra compartilho como nossa arquitetura evoluiu ao longo do crescimento da startup, passando por ferramentas no-code, integrações low-code, desenvolvimento próprio e, mais recentemente, aplicações de Inteligência Artificial.\n\nMais do que apresentar tecnologias, discutiremos os critérios que orientaram cada decisão e como evitar tanto o overengineering quanto a dependência excessiva de ferramentas de terceiros.",
       },
@@ -89,16 +99,19 @@ const SCHEDULE = [
   { start: eventTime("12:20"), end: eventTime("12:55"), talks: {
       ia: {
         speaker: "Leonardo Veri",
+        linkedin: "https://www.linkedin.com/in/leonardoveri",
         title: "Clareza: a verdadeira oportunidade da Inteligência Artificial",
         description: "A verdadeira vantagem competitiva da IA não está nos modelos, mas na clareza para identificar os problemas certos. Frameworks práticos para gerar valor real ao negócio através de IA.",
       },
       webdata: {
         speaker: "Larissa Azevedo",
+        linkedin: "https://www.linkedin.com/in/larissasazevedo/",
         title: "Front-end é o novo Full Stack? A evolução que transformou o papel do desenvolvedor",
         description: "Como o front-end evoluiu para um papel estratégico — performance, segurança, observabilidade, arquitetura, IA, cloud e integração de sistemas cada vez mais na mesma pessoa.",
       },
       mentoring: {
         speaker: "Alex Tavares Faiotto",
+        linkedin: "https://www.linkedin.com/in/alex-faiotto/",
         title: "Como pensar como um arquiteto de software",
         description: "Desenvolvendo pensamento arquitetural na prática: decisões técnicas em cenários reais, monolito vs microsserviços, escolhas tecnológicas, escalabilidade, resiliência, sistemas distribuídos e o alinhamento entre técnico e produto.",
       },

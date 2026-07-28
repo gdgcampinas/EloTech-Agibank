@@ -46,11 +46,16 @@ function talkDetailMarkup(track, data, { reveal = true, timeRange = "", room = "
   const title = reveal ? data.title : "Palestra a confirmar";
   const description = reveal && data.description ? data.description : "";
   const roomLabel = reveal ? room : "";
+  const linkedin = reveal ? data.linkedin : "";
 
   const metaItems = [
     timeRange && `<span>${timeRange}</span>`,
     roomLabel && `<span class="room-tag">${roomLabel}</span>`,
   ].filter(Boolean).join("");
+
+  const speakerLine = linkedin
+    ? `<a class="detail-speaker" href="${linkedin}" target="_blank" rel="noopener">${speaker} <span class="li-icon">in</span></a>`
+    : `<div class="detail-speaker">${speaker}</div>`;
 
   return `
     <div class="detail" data-track="${track.id}">
@@ -58,7 +63,7 @@ function talkDetailMarkup(track, data, { reveal = true, timeRange = "", room = "
       <h3 class="detail-title">${title}</h3>
       ${description ? `<p class="detail-desc">${description}</p>` : ""}
       ${metaItems ? `<div class="detail-meta">${metaItems}</div>` : ""}
-      <div class="detail-speaker">${speaker}</div>
+      ${speakerLine}
     </div>`;
 }
 
