@@ -14,9 +14,11 @@ function timeRangeLabel(slot, timezone) {
 function renderLegend(tracks, mountEl) {
   mountEl.innerHTML = tracks
     .map(track => {
-      const sub = [track.mc && `MC ${track.mc}`, track.room].filter(Boolean).join(" · ");
+      const mc = track.mc ? `<span class="mc">MC ${track.mc}</span>` : "";
+      const room = track.room ? `<span class="room-tag">${track.room}</span>` : "";
+      const sub = [mc, room].filter(Boolean).join(" · ");
       return `
-        <div class="item">
+        <div class="item" data-track="${track.id}">
           <span class="name"><span class="dot" style="background:var(--${track.id})"></span>${track.label}</span>
           ${sub ? `<span class="sub">${sub}</span>` : ""}
         </div>`;

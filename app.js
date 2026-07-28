@@ -52,8 +52,7 @@ function renderHeaderMeta(event, schedule, mountEl) {
     <span class="sep">·</span>
     <span class="when">${start} — ${end}</span>
     <span class="sep">·</span>
-    <span class="venue">${event.venue}</span>
-    <a href="${directions}" target="_blank" rel="noopener">como chegar</a>`;
+    <a class="venue-link" href="${directions}" target="_blank" rel="noopener">${event.venue} · como chegar</a>`;
 }
 
 function renderVenue(event, mountEl) {

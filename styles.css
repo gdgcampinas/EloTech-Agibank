@@ -96,7 +96,6 @@ header{
 }
 .meta-line .when{color:var(--neon);font-weight:700}
 .meta-line .sep{color:var(--muted-dim)}
-.meta-line .venue{color:var(--amber);font-weight:700;text-decoration:underline;text-underline-offset:2px}
 .meta-line a{color:var(--amber);text-decoration:underline;text-underline-offset:2px;font-weight:700}
 
 /* hero */
@@ -157,7 +156,8 @@ main{max-width:1180px;margin:0 auto;padding:0 24px}
 .tracks-legend .item{display:flex;flex-direction:column;gap:2px;padding:0 4px}
 .tracks-legend .name{display:flex;align-items:center;gap:6px;font:700 13px "Public Sans",sans-serif;color:oklch(88% 0.01 260)}
 .tracks-legend .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
-.tracks-legend .sub{font:500 11.5px "Public Sans",sans-serif;color:var(--muted-dim);padding-left:15px}
+.tracks-legend .sub{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font:500 11.5px "Public Sans",sans-serif;color:var(--muted-dim);padding-left:15px}
+.tracks-legend .mc{color:var(--text);font-weight:700}
 
 /* filtro / segmented control */
 .filter-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
@@ -230,9 +230,9 @@ main{max-width:1180px;margin:0 auto;padding:0 24px}
   border:1px solid color-mix(in oklch, var(--track-color, var(--muted)) 40%, transparent);
   color:var(--track-color, var(--muted));
 }
-.talk[data-track="ia"],.detail[data-track="ia"]{--track-color:var(--ia)}
-.talk[data-track="webdata"],.detail[data-track="webdata"]{--track-color:var(--webdata)}
-.talk[data-track="mentoring"],.detail[data-track="mentoring"]{--track-color:var(--mentoring)}
+.talk[data-track="ia"],.detail[data-track="ia"],.item[data-track="ia"]{--track-color:var(--ia)}
+.talk[data-track="webdata"],.detail[data-track="webdata"],.item[data-track="webdata"]{--track-color:var(--webdata)}
+.talk[data-track="mentoring"],.detail[data-track="mentoring"],.item[data-track="mentoring"]{--track-color:var(--mentoring)}
 
 .slot.active .talk{
   background:linear-gradient(135deg, oklch(23% 0.02 260), var(--card-b));
