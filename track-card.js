@@ -47,8 +47,10 @@ function talkDetailMarkup(track, data, { reveal = true, timeRange = "", room = "
   const description = reveal && data.description ? data.description : "";
   const roomLabel = reveal ? room : "";
 
-  const metaItems = [timeRange, roomLabel].filter(Boolean)
-    .map(item => `<span>${item}</span>`).join("");
+  const metaItems = [
+    timeRange && `<span>${timeRange}</span>`,
+    roomLabel && `<span class="room-tag">${roomLabel}</span>`,
+  ].filter(Boolean).join("");
 
   return `
     <div class="detail" data-track="${track.id}">

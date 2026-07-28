@@ -223,15 +223,16 @@ main{max-width:1180px;margin:0 auto;padding:0 24px}
 .talk .speaker{font:600 12.5px "Public Sans",sans-serif;color:oklch(80% 0.01 260)}
 .talk .foot{margin-top:auto;padding-top:6px;display:flex;align-items:center;gap:8px;font:500 12px "Public Sans",sans-serif;color:var(--muted-dim)}
 .talk .foot .time{color:var(--text);font-weight:700}
-.talk .room-tag{
+/* pill de sala — cor da trilha; reusado no card e no modal de detalhe */
+.room-tag{
   font:600 11px "Public Sans",sans-serif;padding:2px 10px;border-radius:100px;
   background:color-mix(in oklch, var(--track-color, var(--muted)) 14%, transparent);
   border:1px solid color-mix(in oklch, var(--track-color, var(--muted)) 40%, transparent);
   color:var(--track-color, var(--muted));
 }
-.talk[data-track="ia"]{--track-color:var(--ia)}
-.talk[data-track="webdata"]{--track-color:var(--webdata)}
-.talk[data-track="mentoring"]{--track-color:var(--mentoring)}
+.talk[data-track="ia"],.detail[data-track="ia"]{--track-color:var(--ia)}
+.talk[data-track="webdata"],.detail[data-track="webdata"]{--track-color:var(--webdata)}
+.talk[data-track="mentoring"],.detail[data-track="mentoring"]{--track-color:var(--mentoring)}
 
 .slot.active .talk{
   background:linear-gradient(135deg, oklch(23% 0.02 260), var(--card-b));
