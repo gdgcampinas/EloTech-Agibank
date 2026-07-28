@@ -292,7 +292,7 @@ footer{max-width:1180px;margin:36px auto 0;padding:0 24px;display:flex;flex-dire
 .detail[data-track="webdata"] .track-label{color:var(--webdata)}
 .detail[data-track="mentoring"] .track-label{color:var(--mentoring)}
 .detail-title{margin:0 0 12px;font:800 22px "Manrope",sans-serif;color:oklch(97% 0.005 260);line-height:1.3}
-.detail-desc{margin:0 0 16px;font:500 14px "Public Sans",sans-serif;color:var(--muted);line-height:1.6}
+.detail-desc{margin:0 0 16px;font:500 14px "Public Sans",sans-serif;color:var(--muted);line-height:1.6;white-space:pre-line}
 .detail-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
 .detail-meta span{
   font:600 12.5px "Public Sans",sans-serif;color:var(--text);
@@ -300,3 +300,11 @@ footer{max-width:1180px;margin:36px auto 0;padding:0 24px;display:flex;flex-dire
   border-radius:100px;padding:5px 13px;
 }
 .detail-speaker{font:700 15px "Public Sans",sans-serif;color:oklch(88% 0.01 260)}
+
+@media(max-width:480px){
+  .modal{padding:12px}
+  .modal-card{padding:22px 18px;max-height:90vh}
+  .detail{margin:-22px -18px 0;padding:20px 18px 0}
+  .detail-title{font-size:19px}
+  .detail-desc{font-size:13.5px}
+}

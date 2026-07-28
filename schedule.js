@@ -27,7 +27,11 @@ function eventTime(hhmm) {
   return new Date(`${EVENT.date}T${hhmm}:00${EVENT.utcOffset}`);
 }
 
-const MOCK_TALK = { speaker: "Em breve", title: "Palestrante e tema a confirmar" };
+const MOCK_TALK = {
+  speaker: "Em breve",
+  title: "Toda startup começa com gambiarra, e isso pode ser uma ótima decisão",
+  description: "Nem toda boa arquitetura nasce elegante. Muitas começam conectando ferramentas, automatizando planilhas, usando soluções prontas e escrevendo apenas o código necessário para validar hipóteses.\n\nNesta palestra compartilho como nossa arquitetura evoluiu ao longo do crescimento da startup, passando por ferramentas no-code, integrações low-code, desenvolvimento próprio e, mais recentemente, aplicações de Inteligência Artificial.\n\nMais do que apresentar tecnologias, discutiremos os critérios que orientaram cada decisão e como evitar tanto o overengineering quanto a dependência excessiva de ferramentas de terceiros.",
+};
 
 const SCHEDULE = [
   { start: eventTime("08:00"), end: eventTime("08:30"), banner: "Credenciamento — Full Evento", room: "Hall" },
