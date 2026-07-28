@@ -6,19 +6,26 @@
 
 /**
  * Overrides de URL pra testar em DEV sem tocar em schedule.js (PROD real):
- *   ?demo=2026-08-01T09:50  → simula a hora do evento (ativa "ao vivo agora")
- *   ?lineup=1                → força mostrar palestrante/título mesmo com
- *                              EVENT.lineupRevealed=false
+ *   ?demo=2026-08-01T09:50     → simula a hora do evento (ativa "ao vivo agora")
+ *   ?demo=2026-08-01T09:50:30  → segundos são opcionais
+ *   ?lineup=1                   → força mostrar palestrante/título mesmo com
+ *                                 EVENT.lineupRevealed=false
  */
 function getParam(name) {
   return new URLSearchParams(location.search).get(name);
 }
 
+/** null se `demo` não veio na URL ou não é uma data válida. */
+function parseDemoDate(demo) {
+  if (!demo) return null;
+  const withSeconds = /T\d{2}:\d{2}:\d{2}/.test(demo) ? demo : `${demo}:00`;
+  const date = new Date(`${withSeconds}${EVENT.utcOffset}`);
+  return isNaN(date.getTime()) ? null : date;
+}
+
 function resolveNow() {
-  const demo = getParam("demo");
-  if (!demo) return () => new Date();
-  const fixedNow = new Date(`${demo}:00${EVENT.utcOffset}`);
-  return () => fixedNow;
+  const fixedNow = parseDemoDate(getParam("demo"));
+  return fixedNow ? () => fixedNow : () => new Date();
 }
 
 function resolveReveal() {
@@ -26,9 +33,13 @@ function resolveReveal() {
 }
 
 function warnIfDemoMode() {
-  if (!getParam("demo")) return;
+  const demo = getParam("demo");
+  if (!demo) return;
+  const valid = parseDemoDate(demo) !== null;
   const banner = document.createElement("div");
-  banner.textContent = "⚠️ MODO TESTE — data simulada, não é o horário real do evento";
+  banner.textContent = valid
+    ? "⚠️ MODO TESTE — data simulada, não é o horário real do evento"
+    : `⚠️ ?demo="${demo}" inválido — mostrando horário real. Formato: AAAA-MM-DDTHH:MM`;
   banner.style.cssText = "background:#ea4335;color:#fff;text-align:center;font-size:.75rem;font-weight:700;padding:6px;position:sticky;top:0;z-index:100";
   document.body.prepend(banner);
 }
