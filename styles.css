@@ -295,7 +295,7 @@ footer{max-width:1180px;margin:36px auto 0;padding:0 24px;display:flex;flex-dire
 .detail-title{margin:0 0 12px;font:800 22px "Manrope",sans-serif;color:oklch(97% 0.005 260);line-height:1.3}
 .detail-desc{margin:0 0 16px;font:500 14px "Public Sans",sans-serif;color:var(--muted);line-height:1.6;white-space:pre-line}
 .detail-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
-.detail-meta span{
+.detail-meta span:not(.room-tag){
   font:600 12.5px "Public Sans",sans-serif;color:var(--text);
   background:rgba(255,255,255,.04);border:1px solid var(--card-border);
   border-radius:100px;padding:5px 13px;
