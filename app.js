@@ -23,9 +23,16 @@ function parseDemoDate(demo) {
   return isNaN(date.getTime()) ? null : date;
 }
 
+/**
+ * O relógio simulado continua avançando normalmente a partir do
+ * instante em ?demo= — fixa um offset em vez de congelar num ponto só,
+ * pra dar pra assistir uma troca de sessão acontecer ao vivo de verdade.
+ */
 function resolveNow() {
-  const fixedNow = parseDemoDate(getParam("demo"));
-  return fixedNow ? () => fixedNow : () => new Date();
+  const demoStart = parseDemoDate(getParam("demo"));
+  if (!demoStart) return () => new Date();
+  const offsetMs = demoStart.getTime() - Date.now();
+  return () => new Date(Date.now() + offsetMs);
 }
 
 function resolveReveal() {
