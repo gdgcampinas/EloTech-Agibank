@@ -78,7 +78,7 @@ function createLiveStatus({ schedule, tracks, event, elements, now = () => new D
         <div class="hero-label">O EVENTO COMEÇA EM</div>
         <div class="countdown">${formatDaysHMS(state.first - now())}</div>
         <div class="hero-before-row">
-          <span class="pill-amber">Inscrições abertas</span>
+          <span class="pill-amber">Inscrições encerradas</span>
           <span class="hero-hint">Programação abaixo em modo prévia</span>
         </div>
       </div>`;
