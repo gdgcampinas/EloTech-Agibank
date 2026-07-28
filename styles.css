@@ -243,6 +243,20 @@ main{max-width:1180px;margin:0 auto;padding:0 24px}
 .slot.active .talk[data-track="mentoring"]{border-color:var(--mentoring);box-shadow:0 0 20px color-mix(in oklch, var(--mentoring) 25%, transparent)}
 
 /* footer / local */
+/* FAQ */
+.faq{max-width:1180px;margin:36px auto 0;padding:0 24px}
+.faq h2{margin:0 0 16px;font:700 22px "Manrope",sans-serif;color:oklch(95% 0.005 260)}
+.faq-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:640px){.faq-grid{grid-template-columns:1fr 1fr}}
+.faq-item{
+  display:flex;gap:14px;align-items:flex-start;
+  background:linear-gradient(135deg,var(--card-a),var(--card-b));
+  border:1px solid var(--card-border);border-radius:var(--radius);padding:18px;
+}
+.faq-icon{font-size:28px;line-height:1;flex:0 0 auto}
+.faq-item h3{margin:0 0 6px;font:700 14px "Public Sans",sans-serif;color:oklch(90% 0.01 260)}
+.faq-item p{margin:0;font:500 13px "Public Sans",sans-serif;color:var(--muted);line-height:1.6}
+
 footer{max-width:1180px;margin:36px auto 0;padding:0 24px;display:flex;flex-direction:column;gap:18px}
 .venue-card{
   background:linear-gradient(135deg,var(--card-a),var(--card-b));
