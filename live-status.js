@@ -124,7 +124,7 @@ function createLiveStatus({ schedule, tracks, event, elements, now = () => new D
         </div>`;
       stickyTxt.textContent = slot.banner;
     } else {
-      const cards = tracks.map(track => trackCardMarkup(track, slot.talks[track.id], { reveal, live: true })).join("");
+      const cards = tracks.map(track => trackCardMarkup(track, slot.talks[track.id], { reveal, live: true, slotIndex: state.activeIndex })).join("");
       hero.innerHTML = `
         <div class="hero-card live">
           <div class="hero-live-top">

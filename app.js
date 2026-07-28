@@ -85,6 +85,9 @@ function initApp() {
 
   initStickyStatus(document.getElementById("hero"), document.getElementById("stickyStatus"));
 
+  const modal = createTalkModal(document.getElementById("talkModal"), document.getElementById("talkModalContent"));
+  initTalkDetails(document.body, { schedule: SCHEDULE, tracks: TRACKS, timezone: EVENT.timezone, reveal, modal });
+
   const liveStatus = createLiveStatus({
     schedule: SCHEDULE,
     tracks: TRACKS,

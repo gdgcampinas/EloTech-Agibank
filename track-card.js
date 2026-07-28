@@ -7,7 +7,7 @@
  */
 const HIDDEN_SPEAKER_LABEL = "Em breve";
 
-function trackCardMarkup(track, data, { reveal = true, live = false, timeRange = "" } = {}) {
+function trackCardMarkup(track, data, { reveal = true, live = false, timeRange = "", slotIndex = null } = {}) {
   const speaker = reveal ? data.speaker : HIDDEN_SPEAKER_LABEL;
   const title = reveal ? data.title : "";
   const room = reveal ? track.room : "";
@@ -23,8 +23,10 @@ function trackCardMarkup(track, data, { reveal = true, live = false, timeRange =
         : `<span class="time">${item}</span>`).join("")}</div>`
     : "";
 
+  const clickable = slotIndex !== null ? ` data-slot-index="${slotIndex}" tabindex="0" role="button"` : "";
+
   return `
-    <div class="talk" data-track="${track.id}">
+    <div class="talk" data-track="${track.id}"${clickable}>
       <div class="track-row">
         <span class="track-label"><span class="dot" style="background:var(--${track.id})"></span>${track.label}</span>
         ${nowTag}
@@ -32,6 +34,29 @@ function trackCardMarkup(track, data, { reveal = true, live = false, timeRange =
       ${title ? `<div class="title">${title}</div>` : ""}
       <div class="speaker">${speaker}</div>
       ${foot}
+    </div>`;
+}
+
+/**
+ * Conteúdo do modal de detalhe — mesma trilha/dados do card, formato
+ * maior com descrição completa. reveal segue a mesma regra do card.
+ */
+function talkDetailMarkup(track, data, { reveal = true, timeRange = "", room = "" } = {}) {
+  const speaker = reveal ? data.speaker : HIDDEN_SPEAKER_LABEL;
+  const title = reveal ? data.title : "Palestra a confirmar";
+  const description = reveal && data.description ? data.description : "";
+  const roomLabel = reveal ? room : "";
+
+  const metaItems = [timeRange, roomLabel].filter(Boolean)
+    .map(item => `<span>${item}</span>`).join("");
+
+  return `
+    <div class="detail" data-track="${track.id}">
+      <span class="track-label"><span class="dot" style="background:var(--${track.id})"></span>${track.label}</span>
+      <h3 class="detail-title">${title}</h3>
+      ${description ? `<p class="detail-desc">${description}</p>` : ""}
+      ${metaItems ? `<div class="detail-meta">${metaItems}</div>` : ""}
+      <div class="detail-speaker">${speaker}</div>
     </div>`;
 }
 
