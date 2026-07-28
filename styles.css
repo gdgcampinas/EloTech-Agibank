@@ -144,7 +144,7 @@ header{
 .hero-after .title{font:800 24px "Manrope",sans-serif;color:oklch(97% 0.005 260);margin-bottom:8px}
 .hero-after .sub{font:500 14px "Public Sans",sans-serif;color:var(--muted)}
 
-main{max-width:1180px;margin:0 auto;padding:0 24px}
+main{max-width:1180px;margin:36px auto 0;padding:0 24px}
 
 /* legenda de trilhas */
 .tracks-legend{
