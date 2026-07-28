@@ -262,6 +262,7 @@ footer{max-width:1180px;margin:36px auto 0;padding:0 24px;display:flex;flex-dire
   background:linear-gradient(135deg,var(--card-a),var(--card-b));
   border:1px solid var(--card-border);border-radius:var(--radius);
   padding:18px;display:flex;gap:16px;flex-wrap:wrap;align-items:stretch;
+  margin-top:12px;
 }
 .venue-info{flex:1 1 260px;display:flex;flex-direction:column;gap:10px}
 .venue-info .label{font:700 13px "Public Sans",sans-serif;color:oklch(88% 0.01 260)}
