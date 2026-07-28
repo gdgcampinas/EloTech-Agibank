@@ -33,31 +33,39 @@ function warnIfDemoMode() {
   document.body.prepend(banner);
 }
 
+/** Único lugar que sabe montar URLs do Google Maps a partir de um endereço. */
+function googleMapsUrls(address) {
+  const q = encodeURIComponent(address);
+  return {
+    directions: `https://www.google.com/maps/dir/?api=1&destination=${q}`,
+    embed: `https://www.google.com/maps?q=${q}&output=embed`,
+  };
+}
+
 function renderHeaderMeta(event, schedule, mountEl) {
   const start = formatEventTime(schedule[0].start, event.timezone);
   const end = formatEventTime(schedule[schedule.length - 1].end, event.timezone);
   const dateLabel = schedule[0].start.toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric", timeZone: event.timezone });
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(event.address)}`;
+  const { directions } = googleMapsUrls(event.address);
   mountEl.innerHTML = `
     <span class="when">${dateLabel}</span>
     <span class="sep">·</span>
     <span class="when">${start} — ${end}</span>
     <span class="sep">·</span>
     <span class="venue">${event.venue}</span>
-    <a href="${directionsUrl}" target="_blank" rel="noopener">como chegar</a>`;
+    <a href="${directions}" target="_blank" rel="noopener">como chegar</a>`;
 }
 
 function renderVenue(event, mountEl) {
-  const mapQuery = encodeURIComponent(event.address);
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${mapQuery}`;
+  const { directions, embed } = googleMapsUrls(event.address);
   mountEl.innerHTML = `
     <div class="venue-info">
       <div class="label">Local</div>
       <div class="addr">${event.venue}<br>${event.address}</div>
-      <a class="go" href="${directionsUrl}" target="_blank" rel="noopener">Como chegar</a>
+      <a class="go" href="${directions}" target="_blank" rel="noopener">Como chegar</a>
     </div>
     <div class="venue-map">
-      <iframe src="https://www.google.com/maps?q=${mapQuery}&output=embed" loading="lazy" title="Mapa até ${event.venue}"></iframe>
+      <iframe src="${embed}" loading="lazy" title="Mapa até ${event.venue}"></iframe>
     </div>`;
 }
 

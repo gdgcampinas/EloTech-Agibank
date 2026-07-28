@@ -37,7 +37,7 @@ function renderAgenda(schedule, tracks, timezone, mountEl, { reveal = true } = {
     .map((slot, index) => {
       const time = formatEventTime(slot.start, timezone);
       const body = slot.banner
-        ? `<div class="banner"><div class="t">${slot.banner}</div>${slot.room ? `<div class="r">${slot.room}</div>` : ""}</div>`
+        ? bannerMarkup(slot)
         : `<div class="talks" data-view="all">${tracks.map(track => trackCardMarkup(track, slot.talks[track.id], { reveal, timeRange: timeRangeLabel(slot, timezone) })).join("")}</div>`;
       return `<div class="slot" data-index="${index}"><div class="slot-time">${time}</div>${body}</div>`;
     })

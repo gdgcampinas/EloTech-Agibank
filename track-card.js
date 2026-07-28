@@ -34,3 +34,11 @@ function trackCardMarkup(track, data, { reveal = true, live = false, timeRange =
       ${foot}
     </div>`;
 }
+
+/**
+ * Sessão combinada (credenciamento, pausa, encerramento) — mesmo bloco
+ * usado na agenda completa e no hero "ao vivo agora".
+ */
+function bannerMarkup(slot) {
+  return `<div class="banner"><div class="t">${slot.banner}</div>${slot.room ? `<div class="r">${slot.room}</div>` : ""}</div>`;
+}
