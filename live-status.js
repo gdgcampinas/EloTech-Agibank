@@ -61,22 +61,24 @@ function resolveEventState(now, schedule) {
 function createLiveStatus({ schedule, tracks, event, elements, now = () => new Date(), reveal = true }) {
   const { statusPill, hero, stickyTxt, stickyPulse } = elements;
 
+  // dot fica num nó fixo, criado uma vez só — só o texto é trocado a
+  // cada tick, então a animação de pulso nunca reinicia sozinha.
   function renderStatusPill(state) {
-    statusPill.classList.toggle("live", state.phase === "live");
-    if (state.phase === "before") {
-      statusPill.innerHTML = `<span class="dot"></span>Começa em ${formatDaysHMS(state.first - now())}`;
-    } else if (state.phase === "live") {
-      statusPill.innerHTML = `<span class="dot"></span>AO VIVO`;
-    } else {
-      statusPill.innerHTML = `<span class="dot"></span>Encerrado`;
+    if (!statusPill.querySelector(".txt")) {
+      statusPill.innerHTML = `<span class="dot"></span><span class="txt"></span>`;
     }
+    statusPill.classList.toggle("live", state.phase === "live");
+    const txt = statusPill.querySelector(".txt");
+    if (state.phase === "before") txt.textContent = `Começa em ${formatDaysHMS(state.first - now())}`;
+    else if (state.phase === "live") txt.textContent = "AO VIVO";
+    else txt.textContent = "Encerrado";
   }
 
   function renderHeroBefore(state) {
     hero.innerHTML = `
       <div class="hero-card hero-before">
         <div class="hero-label">O EVENTO COMEÇA EM</div>
-        <div class="countdown">${formatDaysHMS(state.first - now())}</div>
+        <div class="countdown" id="heroCountdown">${formatDaysHMS(state.first - now())}</div>
         <div class="hero-before-row">
           <span class="pill-amber">Inscrições encerradas</span>
           <span class="hero-hint">Programação abaixo em modo prévia</span>
@@ -111,7 +113,7 @@ function createLiveStatus({ schedule, tracks, event, elements, now = () => new D
       return;
     }
 
-    const nextChange = `<span class="next-change">próxima troca em ${formatMS(slot.end - now())}</span>`;
+    const nextChange = `<span class="next-change" id="nextChangeText">próxima troca em ${formatMS(slot.end - now())}</span>`;
 
     if (slot.banner) {
       hero.innerHTML = `
@@ -140,6 +142,25 @@ function createLiveStatus({ schedule, tracks, event, elements, now = () => new D
     stickyPulse.style.display = "inline-block";
   }
 
+  /**
+   * Chamado quando o estado (fase/sessão ativa) NÃO mudou desde o
+   * último tick — só atualiza os números do contador via texto direto,
+   * sem tocar no resto do DOM. Evita recriar os cards clicáveis do
+   * hero a cada segundo (arriscava perder toque em mobile: se o dedo
+   * tocar bem no instante do innerHTML ser trocado, o clique pode
+   * simplesmente não disparar).
+   */
+  function patchCountdowns(state) {
+    if (state.phase === "before") {
+      const el = document.getElementById("heroCountdown");
+      if (el) el.textContent = formatDaysHMS(state.first - now());
+      stickyTxt.textContent = `Começa em ${formatDaysHMS(state.first - now())}`;
+    } else if (state.phase === "live" && state.activeSlot) {
+      const el = document.getElementById("nextChangeText");
+      if (el) el.textContent = `próxima troca em ${formatMS(state.activeSlot.end - now())}`;
+    }
+  }
+
   function markAgendaSlots(state) {
     const currentTime = now();
     document.querySelectorAll(".slot").forEach((el, index) => {
@@ -149,10 +170,19 @@ function createLiveStatus({ schedule, tracks, event, elements, now = () => new D
     });
   }
 
+  let renderedKey = null;
+
   function tick() {
     const state = resolveEventState(now(), schedule);
     renderStatusPill(state);
     markAgendaSlots(state);
+
+    const key = state.phase === "live" ? `live:${state.activeIndex}` : state.phase;
+    if (key === renderedKey) {
+      patchCountdowns(state);
+      return;
+    }
+    renderedKey = key;
 
     if (state.phase === "before") renderHeroBefore(state);
     else if (state.phase === "after") renderHeroAfter();
