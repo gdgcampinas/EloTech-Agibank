@@ -7,6 +7,12 @@ function formatEventTime(date, timezone) {
   return date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", timeZone: timezone });
 }
 
+/** "08h" — padrão usado nas outras comunicações do evento (sem minutos). */
+function hourLabel(date, timezone) {
+  const hour = date.toLocaleTimeString("pt-BR", { hour: "2-digit", timeZone: timezone, hour12: false });
+  return `${hour}h`;
+}
+
 function timeRangeLabel(slot, timezone) {
   return `${formatEventTime(slot.start, timezone)} — ${formatEventTime(slot.end, timezone)}`;
 }

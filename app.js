@@ -61,31 +61,33 @@ function googleMapsUrls(address) {
 }
 
 function renderHeaderMeta(event, schedule, mountEl) {
-  const start = formatEventTime(schedule[0].start, event.timezone);
-  const end = formatEventTime(schedule[schedule.length - 1].end, event.timezone);
+  const start = hourLabel(schedule[0].start, event.timezone);
+  const end = hourLabel(schedule[schedule.length - 1].end, event.timezone);
   const dateLabel = schedule[0].start.toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric", timeZone: event.timezone });
   const { directions } = googleMapsUrls(event.address);
   mountEl.innerHTML = `
     <span class="when">${dateLabel}</span>
     <span class="sep">·</span>
-    <span class="when">${start} — ${end}</span>
+    <span class="when">das ${start} às ${end}</span>
     <span class="sep">·</span>
     <a class="venue-link" href="${directions}" target="_blank" rel="noopener">${event.venue} · como chegar</a>`;
 }
 
 function renderVenue(event, mountEl) {
-  // sem mapa embutido de propósito: o campus é de acesso restrito
-  // (empresa fechada), sem sentido expor o mapa público de navegação.
-  const { directions } = googleMapsUrls(event.address);
+  // mapa externo (endereço/entrada) pode; planta interna do prédio, não.
+  const { directions, embed } = googleMapsUrls(event.address);
   mountEl.innerHTML = `
     <div class="venue-info">
       <div class="label">Local</div>
       <div class="addr">${event.venue}<br>${event.address}</div>
       <a class="go" href="${directions}" target="_blank" rel="noopener">Como chegar</a>
+      <div class="venue-qr">
+        <img src="qrcode.png" alt="QR code para esta agenda" width="96" height="96">
+        <span>Aponte a câmera para abrir a agenda</span>
+      </div>
     </div>
-    <div class="venue-qr">
-      <img src="qrcode.png" alt="QR code para esta agenda" width="120" height="120">
-      <span>Aponte a câmera para abrir a agenda</span>
+    <div class="venue-map">
+      <iframe src="${embed}" loading="lazy" title="Mapa até ${event.venue}"></iframe>
     </div>`;
 }
 

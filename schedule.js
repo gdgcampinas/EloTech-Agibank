@@ -23,8 +23,8 @@ function eventTime(hhmm) {
 }
 
 const SCHEDULE = [
-  { start: eventTime("08:00"), end: eventTime("08:30"), banner: "Credenciamento — Full Evento", room: "Hall" },
-  { start: eventTime("08:30"), end: eventTime("08:50"), banner: "Apresentação GDG Campinas + agibank", room: "Auditório" },
+  { start: eventTime("08:00"), end: eventTime("08:30"), banner: "Credenciamento — Full Evento", room: "Recepção" },
+  { start: eventTime("08:30"), end: eventTime("08:50"), banner: "Apresentação GDG Campinas + agibank", room: "Arquibancada Agibank" },
   { start: eventTime("09:00"), end: eventTime("09:35"), talks: {
       ia: { speaker: "agibank", title: "" },
       webdata: {
@@ -103,5 +103,5 @@ const SCHEDULE = [
         description: "Desenvolvendo pensamento arquitetural na prática: decisões técnicas em cenários reais, monolito vs microsserviços, escolhas tecnológicas, escalabilidade, resiliência, sistemas distribuídos e o alinhamento entre técnico e produto.",
       },
   }},
-  { start: eventTime("13:00"), end: eventTime("13:20"), banner: "Encerramento e sorteios — Keynote final", room: "Auditório" },
+  { start: eventTime("13:00"), end: eventTime("13:20"), banner: "Encerramento e sorteios — Keynote final", room: "Arquibancada Agibank" },
 ];
