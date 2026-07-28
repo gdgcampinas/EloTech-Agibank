@@ -48,7 +48,7 @@ function resolveEventState(now, schedule) {
   const last = schedule[schedule.length - 1].end;
 
   if (now < first) return { phase: "before", first };
-  if (now > last) return { phase: "after" };
+  if (now >= last) return { phase: "after" };
 
   const activeIndex = schedule.findIndex(s => now >= s.start && now < s.end);
   if (activeIndex >= 0) {
