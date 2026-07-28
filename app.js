@@ -91,22 +91,23 @@ function renderHeaderMeta(event, schedule, mountEl) {
     <a class="venue-link" href="${directions}" target="_blank" rel="noopener">${event.venue} · como chegar</a>`;
 }
 
-function renderVenue(event, mountEl, schedule) {
-  // mapa externo (endereço/entrada) pode; planta interna do prédio, não.
-  const { directions, embed } = googleMapsUrls(event.address);
+function renderVenueInfo(event, mountEl, schedule) {
+  const { directions } = googleMapsUrls(event.address);
   const gcal = googleCalendarUrl(event, schedule);
   mountEl.innerHTML = `
-    <div class="venue-info">
-      <div class="label">Local</div>
-      <div class="addr">${event.venue}<br>${event.address}</div>
-      <div class="venue-actions">
-        <a class="go" href="${directions}" target="_blank" rel="noopener">Como chegar</a>
-        <a class="go" href="${gcal}" target="_blank" rel="noopener">+ Calendário</a>
-      </div>
-    </div>
-    <div class="venue-map">
-      <iframe src="${embed}" loading="lazy" title="Mapa até ${event.venue}"></iframe>
+    <p class="venue-addr">${event.venue}<br>${event.address}</p>
+    <div class="venue-actions">
+      <a class="go go-primary" href="${directions}" target="_blank" rel="noopener">Como chegar</a>
+      <a class="go go-cal" href="${gcal}" target="_blank" rel="noopener">+ Calendário</a>
     </div>`;
+}
+
+function renderVenueMap(event, mountEl) {
+  // mapa externo (endereço/entrada) pode; planta interna do prédio, não.
+  const { embed } = googleMapsUrls(event.address);
+  mountEl.innerHTML = `
+    <div class="label">Local</div>
+    <div class="frame"><iframe src="${embed}" loading="lazy" title="Mapa até ${event.venue}"></iframe></div>`;
 }
 
 function initApp() {
@@ -114,7 +115,8 @@ function initApp() {
   const reveal = resolveReveal();
 
   renderHeaderMeta(EVENT, SCHEDULE, document.getElementById("headerMeta"));
-  renderVenue(EVENT, document.getElementById("venue"), SCHEDULE);
+  renderVenueInfo(EVENT, document.getElementById("venueInfo"), SCHEDULE);
+  renderVenueMap(EVENT, document.getElementById("venueMap"));
 
   const tabsEl = document.querySelector(".tabs");
   const agendaEl = document.getElementById("agenda");

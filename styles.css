@@ -242,38 +242,53 @@ main{max-width:1180px;margin:36px auto 0;padding:0 24px}
 .slot.active .talk[data-track="webdata"]{border-color:var(--webdata);box-shadow:0 0 20px color-mix(in oklch, var(--webdata) 25%, transparent)}
 .slot.active .talk[data-track="mentoring"]{border-color:var(--mentoring);box-shadow:0 0 20px color-mix(in oklch, var(--mentoring) 25%, transparent)}
 
-/* footer / local */
-/* FAQ */
+/* FAQ "Antes de vir" */
 .faq{max-width:1180px;margin:36px auto 0;padding:0 24px}
-.faq h2{margin:0 0 16px;font:700 22px "Manrope",sans-serif;color:oklch(95% 0.005 260)}
+.faq-head{margin-bottom:16px}
+.faq-head h2{margin:0 0 4px;font:700 22px "Manrope",sans-serif;color:oklch(95% 0.005 260)}
+.faq-sub{margin:0;font:500 14px "Public Sans",sans-serif;color:var(--muted)}
 .faq-grid{display:grid;grid-template-columns:1fr;gap:12px}
-@media(min-width:640px){.faq-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:780px){.faq-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* cards reusam a cor de trilha só como acento visual (sem ligação com o tema) */
 .faq-item{
-  display:flex;gap:14px;align-items:flex-start;
-  background:linear-gradient(135deg,var(--card-a),var(--card-b));
-  border:1px solid var(--card-border);border-radius:var(--radius);padding:18px;
+  position:relative;overflow:hidden;
+  background:linear-gradient(180deg,var(--card-a),var(--card-b));
+  border:1px solid var(--card-border);border-radius:var(--radius);
+  padding:20px 18px 18px;
 }
-.faq-icon{font-size:28px;line-height:1;flex:0 0 auto}
-.faq-item h3{margin:0 0 6px;font:700 14px "Public Sans",sans-serif;color:oklch(90% 0.01 260)}
-.faq-item p{margin:0;font:500 13px "Public Sans",sans-serif;color:var(--muted);line-height:1.6}
+.faq-item.track-ia{--track:var(--ia)}
+.faq-item.track-webdata{--track:var(--webdata)}
+.faq-item.track-mentoring{--track:var(--mentoring)}
+.faq-item::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--track)}
+.faq-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:color-mix(in oklch, var(--track) 16%, transparent);
+  color:var(--track);display:flex;align-items:center;justify-content:center;margin-bottom:14px;
+}
+.faq-item h3{margin:0 0 7px;font:700 16px "Manrope",sans-serif;color:oklch(95% 0.006 260)}
+.faq-item p{margin:0;font:500 13.5px "Public Sans",sans-serif;color:var(--muted);line-height:1.55}
+
+.venue-addr{margin:0 0 14px;font:500 13.5px "Public Sans",sans-serif;color:var(--muted);line-height:1.55}
+.venue-actions{display:flex;flex-wrap:wrap;gap:8px}
+.venue-actions .go{
+  font:700 12px "Public Sans",sans-serif;color:oklch(15% 0.02 260);
+  border-radius:100px;padding:7px 14px;text-decoration:none;
+}
+.venue-actions .go-primary{background:var(--mentoring)}
+.venue-actions .go-cal{background:var(--amber)}
+
+.venue-map-card{
+  margin-top:12px;
+  background:linear-gradient(180deg,var(--card-a),var(--card-b));
+  border:1px solid var(--card-border);border-radius:var(--radius);
+  padding:16px 18px 0;
+}
+.venue-map-card .label{margin-bottom:12px;font:700 15px "Manrope",sans-serif;color:oklch(95% 0.006 260)}
+.venue-map-card .frame{border-radius:10px;overflow:hidden;margin:0 -1px -1px}
+.venue-map-card iframe{width:100%;height:180px;border:0;display:block;filter:grayscale(1) invert(.92) brightness(.9)}
 
 footer{max-width:1180px;margin:36px auto 0;padding:0 24px;display:flex;flex-direction:column;gap:18px}
-.venue-card{
-  background:linear-gradient(135deg,var(--card-a),var(--card-b));
-  border:1px solid var(--card-border);border-radius:var(--radius);
-  padding:18px;display:flex;gap:16px;flex-wrap:wrap;align-items:stretch;
-  margin-top:12px;
-}
-.venue-info{flex:1 1 260px;display:flex;flex-direction:column;gap:10px}
-.venue-info .label{font:700 13px "Public Sans",sans-serif;color:oklch(88% 0.01 260)}
-.venue-info .addr{font:500 13px "Public Sans",sans-serif;color:var(--muted);line-height:1.6}
-.venue-actions{display:flex;flex-wrap:wrap;gap:8px}
-.venue-info .go{
-  font:700 13px "Public Sans",sans-serif;color:oklch(12% 0.01 260);
-  background:var(--amber);border-radius:100px;padding:9px 18px;text-decoration:none;
-}
-.venue-map{flex:1 1 260px;min-height:180px;border-radius:10px;overflow:hidden;border:1px solid var(--card-border)}
-.venue-map iframe{width:100%;height:100%;min-height:180px;border:0;filter:grayscale(1) invert(.92) brightness(.9)}
 
 .social-links{display:flex;justify-content:center;gap:18px;padding-top:4px}
 .social-links a{font:700 12.5px "Public Sans",sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:2px}
