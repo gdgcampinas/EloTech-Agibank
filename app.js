@@ -101,11 +101,7 @@ function renderVenue(event, mountEl, schedule) {
       <div class="addr">${event.venue}<br>${event.address}</div>
       <div class="venue-actions">
         <a class="go" href="${directions}" target="_blank" rel="noopener">Como chegar</a>
-        <a class="go go-outline" href="${gcal}" target="_blank" rel="noopener">+ Calendário</a>
-      </div>
-      <div class="venue-qr">
-        <img src="qrcode.png" alt="QR code para esta agenda" width="96" height="96">
-        <span>Aponte a câmera para abrir a agenda</span>
+        <a class="go" href="${gcal}" target="_blank" rel="noopener">+ Calendário</a>
       </div>
     </div>
     <div class="venue-map">
