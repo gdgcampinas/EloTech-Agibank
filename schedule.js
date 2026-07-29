@@ -13,9 +13,9 @@ const EVENT = {
 };
 
 const TRACKS = [
-  { id: "ia", label: "IA", shortLabel: "IA", room: "Arquibancada Agibank", mc: "Camila Duarte" },
-  { id: "webdata", label: "Front-end / Back-end / Data", shortLabel: "Front/Back/Data", room: "Uni Agi", mc: "Diego Nunes" },
-  { id: "mentoring", label: "Carreira em Tecnologia", shortLabel: "Carreira", room: "Sala de treinamento", mc: "Fernanda Lopes" },
+  { id: "ia", label: "IA", shortLabel: "IA", room: "Arquibancada Agibank", mc: "Larissa Cristina Pereira" },
+  { id: "webdata", label: "Front-end / Back-end / Data", shortLabel: "Front/Back/Data", room: "Uni Agi", mc: "Eduarda Valle Ros Tudela" },
+  { id: "mentoring", label: "Carreira em Tecnologia", shortLabel: "Carreira", room: "Sala de treinamento", mc: "Ana Flavia Pereira Leite" },
 ];
 
 function eventTime(hhmm) {
