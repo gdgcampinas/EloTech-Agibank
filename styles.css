@@ -273,8 +273,8 @@ main{max-width:1180px;margin:36px auto 0;padding:0 24px}
 .faq-link{display:inline-block;margin-top:10px;font:700 12.5px "Public Sans",sans-serif;color:var(--track)}
 
 .menu-carousel{position:relative;margin-top:16px;border-radius:10px;overflow:hidden;border:1px solid var(--card-border);background:var(--card-b)}
-.menu-track{display:flex;transition:transform .3s ease}
-.menu-track img{width:100%;flex:0 0 100%;display:block}
+.menu-track{display:flex;height:min(70vh,560px);transition:transform .3s ease}
+.menu-track img{width:100%;height:100%;flex:0 0 100%;display:block;object-fit:contain;background:#000}
 .menu-nav{
   position:absolute;top:50%;transform:translateY(-50%);
   width:36px;height:36px;border-radius:50%;
