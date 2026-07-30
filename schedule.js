@@ -33,7 +33,14 @@ const SCHEDULE = [
         title: "Exploring Google's AI ecosystem for the modern web",
         description: "O front-end entrou oficialmente na era AI-First. Uma visão prática das Web AI APIs no Chrome, do Gemini rodando direto no navegador e do Chrome WebMCP para integrar IA de forma real nas aplicações web.",
       },
-      mentoring: { speaker: "agibank", title: "" },
+      mentoring: {
+        speakers: [
+          { name: "Nicole Germano", linkedin: "https://www.linkedin.com/in/nicole-germano-44b032163/" },
+          { name: "Débora Cangussu", linkedin: "https://www.linkedin.com/in/debora-cangussu/" },
+        ],
+        title: "Tech em movimento: Tendências, Oportunidades e como se preparar",
+        description: "Do boom da tecnologia à revolução da Inteligência Artificial: uma conversa sobre as transformações que estão redefinindo carreiras e criando novas oportunidades profissionais. Vamos entender como a IA está potencializando talentos, acelerando o aprendizado e abrindo caminhos antes inimagináveis para quem deseja atuar no setor. Ao final, uma sessão aberta de perguntas e respostas com dicas práticas para se destacar em processos seletivos, desenvolver competências valorizadas pelo mercado e construir uma carreira de sucesso em tecnologia.",
+      },
   }},
   { start: eventTime("09:40"), end: eventTime("10:15"), talks: {
       ia: {

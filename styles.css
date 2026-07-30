@@ -337,6 +337,7 @@ footer{max-width:1180px;margin:36px auto 0;padding:0 24px;display:flex;flex-dire
   background:rgba(255,255,255,.04);border:1px solid var(--card-border);
   border-radius:100px;padding:5px 13px;
 }
+.detail-speakers{display:flex;flex-direction:column;gap:8px}
 .detail-speaker{font:700 15px "Public Sans",sans-serif;color:oklch(88% 0.01 260)}
 a.detail-speaker{display:inline-flex;align-items:center;gap:7px;text-decoration:none}
 a.detail-speaker:hover{text-decoration:underline}

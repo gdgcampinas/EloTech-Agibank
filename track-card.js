@@ -7,8 +7,15 @@
  */
 const HIDDEN_SPEAKER_LABEL = "Em breve";
 
+/** Normaliza speaker único ou `speakers: [{name, linkedin}]` (palestra em dupla/painel). */
+function speakerList(data) {
+  if (Array.isArray(data.speakers)) return data.speakers;
+  if (!data.speaker) return [];
+  return [{ name: data.speaker, linkedin: data.linkedin }];
+}
+
 function trackCardMarkup(track, data, { reveal = true, live = false, timeRange = "", slotIndex = null } = {}) {
-  const speaker = reveal ? data.speaker : HIDDEN_SPEAKER_LABEL;
+  const speaker = reveal ? speakerList(data).map((s) => s.name).join(" & ") || data.speaker : HIDDEN_SPEAKER_LABEL;
   const title = reveal ? data.title : "";
   const room = reveal ? track.room : "";
 
@@ -42,20 +49,21 @@ function trackCardMarkup(track, data, { reveal = true, live = false, timeRange =
  * maior com descrição completa. reveal segue a mesma regra do card.
  */
 function talkDetailMarkup(track, data, { reveal = true, timeRange = "", room = "" } = {}) {
-  const speaker = reveal ? data.speaker : HIDDEN_SPEAKER_LABEL;
+  const speakers = reveal ? speakerList(data) : [];
   const title = reveal ? data.title : "Palestra a confirmar";
   const description = reveal && data.description ? data.description : "";
   const roomLabel = reveal ? room : "";
-  const linkedin = reveal ? data.linkedin : "";
 
   const metaItems = [
     timeRange && `<span>${timeRange}</span>`,
     roomLabel && `<span class="room-tag">${roomLabel}</span>`,
   ].filter(Boolean).join("");
 
-  const speakerLine = linkedin
-    ? `<a class="detail-speaker" href="${linkedin}" target="_blank" rel="noopener">${speaker} <span class="li-icon">in</span></a>`
-    : `<div class="detail-speaker">${speaker}</div>`;
+  const speakerLine = speakers.length
+    ? `<div class="detail-speakers">${speakers.map((s) => s.linkedin
+        ? `<a class="detail-speaker" href="${s.linkedin}" target="_blank" rel="noopener">${s.name} <span class="li-icon">in</span></a>`
+        : `<div class="detail-speaker">${s.name}</div>`).join("")}</div>`
+    : `<div class="detail-speaker">${HIDDEN_SPEAKER_LABEL}</div>`;
 
   return `
     <div class="detail" data-track="${track.id}">
