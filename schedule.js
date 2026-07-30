@@ -26,7 +26,12 @@ const SCHEDULE = [
   { start: eventTime("08:00"), end: eventTime("08:30"), banner: "Credenciamento — Full Evento", room: "Recepção" },
   { start: eventTime("08:30"), end: eventTime("08:50"), banner: "Apresentação GDG Campinas + agibank", room: "Arquibancada Agibank" },
   { start: eventTime("09:00"), end: eventTime("09:35"), talks: {
-      ia: { speaker: "agibank", title: "" },
+      ia: {
+        speaker: "Lucas Miranda Sales",
+        linkedin: "https://www.linkedin.com/in/lucas-miranda-sales-3a37207a/",
+        title: "O que é, por dentro, uma IA",
+        description: "Nenhum termo técnico sem explicação: uma IA é bilhões de números ajustáveis; treinar é ajustá-los lendo texto (a cada palavra, só 12% deles trabalha); fine-tuning é ajuste fino com seus próprios exemplos, mexendo em apenas 0,0059% desses números na prática. Se alguém disser que treinou uma IA do zero, quase certamente quis dizer isto último. Números reais do modelo nvidia/Nemotron-3-Nano-Omni-30B-A3B, reconstruídos do arquivo de configuração dele e de um conjunto público de 49.772 exemplos — o termo técnico para os bilhetes é LoRA; para os grupos, mixture of experts.",
+      },
       webdata: {
         speaker: "Kevin Uehara",
         linkedin: "https://www.linkedin.com/in/kevin-uehara/",
