@@ -120,12 +120,18 @@ const FOOD_MENUS = [
 ];
 
 function foodMenuMarkup() {
-  const images = FOOD_MENUS.map(m => `<img src="${m.file}" alt="${m.alt}" loading="lazy">`).join("");
+  const slides = FOOD_MENUS.map(m => `<img src="${m.file}" alt="${m.alt}" loading="lazy">`).join("");
+  const dots = FOOD_MENUS.map((_, i) => `<span class="${i === 0 ? "active" : ""}"></span>`).join("");
   return `
     <div class="detail">
       <h3 class="detail-title">Cardápio dos food trucks</h3>
       <p class="detail-desc">Funcionando das 08h às 13h no local.</p>
-      <div class="menu-gallery">${images}</div>
+      <div class="menu-carousel" data-index="0">
+        <div class="menu-track">${slides}</div>
+        <button class="menu-nav prev" aria-label="Cardápio anterior">‹</button>
+        <button class="menu-nav next" aria-label="Próximo cardápio">›</button>
+        <div class="menu-dots">${dots}</div>
+      </div>
     </div>`;
 }
 
@@ -139,6 +145,22 @@ function initFoodMenu(cardEl, modal) {
       event.preventDefault();
       openMenu();
     }
+  });
+}
+
+/** Setas do carrossel de cardápios — delegado no modal pra funcionar mesmo com conteúdo recriado a cada abertura. */
+function initMenuCarousel(modalEl) {
+  modalEl.addEventListener("click", event => {
+    const btn = event.target.closest(".menu-nav");
+    if (!btn) return;
+    const carousel = btn.closest(".menu-carousel");
+    const dots = carousel.querySelectorAll(".menu-dots span");
+    const count = dots.length;
+    const step = btn.classList.contains("next") ? 1 : -1;
+    const index = (Number(carousel.dataset.index) + step + count) % count;
+    carousel.dataset.index = index;
+    carousel.querySelector(".menu-track").style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
   });
 }
 
@@ -162,6 +184,7 @@ function initApp() {
   const modal = createTalkModal(document.getElementById("talkModal"), document.getElementById("talkModalContent"));
   initTalkDetails(document.body, { schedule: SCHEDULE, tracks: TRACKS, timezone: EVENT.timezone, reveal, modal });
   initFoodMenu(document.getElementById("foodCard"), modal);
+  initMenuCarousel(document.getElementById("talkModal"));
 
   const liveStatus = createLiveStatus({
     schedule: SCHEDULE,

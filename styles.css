@@ -272,8 +272,22 @@ main{max-width:1180px;margin:36px auto 0;padding:0 24px}
 .faq-item.clickable:hover{border-color:var(--track)}
 .faq-link{display:inline-block;margin-top:10px;font:700 12.5px "Public Sans",sans-serif;color:var(--track)}
 
-.menu-gallery{display:flex;flex-direction:column;gap:12px;margin-top:16px}
-.menu-gallery img{width:100%;border-radius:10px;display:block;border:1px solid var(--card-border)}
+.menu-carousel{position:relative;margin-top:16px;border-radius:10px;overflow:hidden;border:1px solid var(--card-border);background:var(--card-b)}
+.menu-track{display:flex;transition:transform .3s ease}
+.menu-track img{width:100%;flex:0 0 100%;display:block}
+.menu-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:36px;height:36px;border-radius:50%;
+  background:oklch(15% 0.02 260 / .8);border:1px solid var(--card-border);
+  color:var(--text);font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+.menu-nav:hover{background:oklch(22% 0.02 260 / .9)}
+.menu-nav.prev{left:10px}
+.menu-nav.next{right:10px}
+.menu-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.menu-dots span{width:6px;height:6px;border-radius:50%;background:oklch(80% 0.01 260 / .35)}
+.menu-dots span.active{background:var(--amber)}
 
 .venue-addr{margin:0 0 14px;font:500 13.5px "Public Sans",sans-serif;color:var(--muted);line-height:1.55}
 .venue-actions{display:flex;flex-wrap:wrap;gap:8px}
