@@ -5,10 +5,14 @@
  * talkDetailMarkup (track-card.js).
  */
 function createTalkModal(modalEl, contentEl) {
-  function open(track, data, meta) {
-    contentEl.innerHTML = talkDetailMarkup(track, data, meta);
+  function openHTML(html) {
+    contentEl.innerHTML = html;
     modalEl.hidden = false;
     document.body.style.overflow = "hidden";
+  }
+
+  function open(track, data, meta) {
+    openHTML(talkDetailMarkup(track, data, meta));
   }
 
   function close() {
@@ -23,7 +27,7 @@ function createTalkModal(modalEl, contentEl) {
     if (event.key === "Escape" && !modalEl.hidden) close();
   });
 
-  return { open, close };
+  return { open, openHTML, close };
 }
 
 /**

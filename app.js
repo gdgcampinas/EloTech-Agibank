@@ -110,6 +110,38 @@ function renderVenueMap(event, mountEl) {
     <div class="frame"><iframe src="${embed}" loading="lazy" title="Mapa até ${event.venue}"></iframe></div>`;
 }
 
+/** Cardápios dos food trucks confirmados — imagens só carregam ao abrir o modal (clique). */
+const FOOD_MENUS = [
+  { file: "menu-naty-bolos.jpg", alt: "Cardápio Naty Bolos" },
+  { file: "menu-to-com-fome.jpg", alt: "Cardápio Tô com Fome" },
+  { file: "menu-hora-do-recreio.jpg", alt: "Cardápio Hora do Recreio" },
+  { file: "menu-jc10-tradicionais.jpg", alt: "Cardápio JC10 Burguer — tradicionais" },
+  { file: "menu-jc10-agridoce.jpg", alt: "Cardápio JC10 Burguer — agridoce e batatas" },
+];
+
+function foodMenuMarkup() {
+  const images = FOOD_MENUS.map(m => `<img src="${m.file}" alt="${m.alt}" loading="lazy">`).join("");
+  return `
+    <div class="detail">
+      <h3 class="detail-title">Cardápio dos food trucks</h3>
+      <p class="detail-desc">Funcionando das 08h às 13h no local.</p>
+      <div class="menu-gallery">${images}</div>
+    </div>`;
+}
+
+function initFoodMenu(cardEl, modal) {
+  cardEl.tabIndex = 0;
+  cardEl.setAttribute("role", "button");
+  const openMenu = () => modal.openHTML(foodMenuMarkup());
+  cardEl.addEventListener("click", openMenu);
+  cardEl.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openMenu();
+    }
+  });
+}
+
 function initApp() {
   warnIfDemoMode();
   const reveal = resolveReveal();
@@ -129,6 +161,7 @@ function initApp() {
 
   const modal = createTalkModal(document.getElementById("talkModal"), document.getElementById("talkModalContent"));
   initTalkDetails(document.body, { schedule: SCHEDULE, tracks: TRACKS, timezone: EVENT.timezone, reveal, modal });
+  initFoodMenu(document.getElementById("foodCard"), modal);
 
   const liveStatus = createLiveStatus({
     schedule: SCHEDULE,

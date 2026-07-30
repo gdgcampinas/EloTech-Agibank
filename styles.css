@@ -268,6 +268,12 @@ main{max-width:1180px;margin:36px auto 0;padding:0 24px}
 }
 .faq-item h3{margin:0 0 7px;font:700 16px "Manrope",sans-serif;color:oklch(95% 0.006 260)}
 .faq-item p{margin:0;font:500 13.5px "Public Sans",sans-serif;color:var(--muted);line-height:1.55}
+.faq-item.clickable{cursor:pointer}
+.faq-item.clickable:hover{border-color:var(--track)}
+.faq-link{display:inline-block;margin-top:10px;font:700 12.5px "Public Sans",sans-serif;color:var(--track)}
+
+.menu-gallery{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.menu-gallery img{width:100%;border-radius:10px;display:block;border:1px solid var(--card-border)}
 
 .venue-addr{margin:0 0 14px;font:500 13.5px "Public Sans",sans-serif;color:var(--muted);line-height:1.55}
 .venue-actions{display:flex;flex-wrap:wrap;gap:8px}
