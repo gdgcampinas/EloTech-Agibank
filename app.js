@@ -193,7 +193,7 @@ function initApp() {
   initGalleryCard(document.getElementById("foodCard"), modal, () =>
     galleryMarkup("Cardápio dos food trucks", "Funcionando das 08h às 13h no local.", FOOD_MENUS));
   initGalleryCard(document.getElementById("parkingCard"), modal, () =>
-    galleryMarkup("Estacionamento", "Gratuito, cancela liberada — E3 (mais próximo) ou Agi Campus.", PARKING_MAPS));
+    galleryMarkup("Estacionamento", "Gratuito, cancela liberada — Agi Campus (prioritário) ou E3, se as vagas do campus esgotarem.", PARKING_MAPS));
   initMenuCarousel(document.getElementById("talkModal"));
 
   const liveStatus = createLiveStatus({
