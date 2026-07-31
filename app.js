@@ -119,31 +119,38 @@ const FOOD_MENUS = [
   { file: "menu-jc10-agridoce.jpg", alt: "Cardápio JC10 Burguer — agridoce e batatas" },
 ];
 
-function foodMenuMarkup() {
-  const slides = FOOD_MENUS.map(m => `<img src="${m.file}" alt="${m.alt}" loading="lazy">`).join("");
-  const dots = FOOD_MENUS.map((_, i) => `<span class="${i === 0 ? "active" : ""}"></span>`).join("");
+const PARKING_MAPS = [
+  { file: "parking-map.jpg", alt: "Mapa dos estacionamentos E3 e Agi Campus" },
+];
+
+/** Modal genérico de galeria (cardápio, mapa do estacionamento etc) — setas só aparecem com mais de 1 imagem. */
+function galleryMarkup(title, subtitle, images) {
+  const slides = images.map(m => `<img src="${m.file}" alt="${m.alt}" loading="lazy">`).join("");
+  const nav = images.length > 1
+    ? `<button class="menu-nav prev" aria-label="Anterior">‹</button>
+       <button class="menu-nav next" aria-label="Próximo">›</button>
+       <div class="menu-dots">${images.map((_, i) => `<span class="${i === 0 ? "active" : ""}"></span>`).join("")}</div>`
+    : "";
   return `
     <div class="detail">
-      <h3 class="detail-title">Cardápio dos food trucks</h3>
-      <p class="detail-desc">Funcionando das 08h às 13h no local.</p>
+      <h3 class="detail-title">${title}</h3>
+      <p class="detail-desc">${subtitle}</p>
       <div class="menu-carousel" data-index="0">
         <div class="menu-track">${slides}</div>
-        <button class="menu-nav prev" aria-label="Cardápio anterior">‹</button>
-        <button class="menu-nav next" aria-label="Próximo cardápio">›</button>
-        <div class="menu-dots">${dots}</div>
+        ${nav}
       </div>
     </div>`;
 }
 
-function initFoodMenu(cardEl, modal) {
+function initGalleryCard(cardEl, modal, markupFn) {
   cardEl.tabIndex = 0;
   cardEl.setAttribute("role", "button");
-  const openMenu = () => modal.openHTML(foodMenuMarkup());
-  cardEl.addEventListener("click", openMenu);
+  const open = () => modal.openHTML(markupFn());
+  cardEl.addEventListener("click", open);
   cardEl.addEventListener("keydown", event => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      openMenu();
+      open();
     }
   });
 }
@@ -183,7 +190,10 @@ function initApp() {
 
   const modal = createTalkModal(document.getElementById("talkModal"), document.getElementById("talkModalContent"));
   initTalkDetails(document.body, { schedule: SCHEDULE, tracks: TRACKS, timezone: EVENT.timezone, reveal, modal });
-  initFoodMenu(document.getElementById("foodCard"), modal);
+  initGalleryCard(document.getElementById("foodCard"), modal, () =>
+    galleryMarkup("Cardápio dos food trucks", "Funcionando das 08h às 13h no local.", FOOD_MENUS));
+  initGalleryCard(document.getElementById("parkingCard"), modal, () =>
+    galleryMarkup("Estacionamento", "Gratuito, cancela liberada — E3 (mais próximo) ou Agi Campus.", PARKING_MAPS));
   initMenuCarousel(document.getElementById("talkModal"));
 
   const liveStatus = createLiveStatus({
